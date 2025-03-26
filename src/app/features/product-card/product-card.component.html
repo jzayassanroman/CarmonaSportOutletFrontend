@@ -1,11 +1,56 @@
+<!-- product-card.component.html -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
   <div *ngFor="let product of products" class="bg-white border rounded-2xl shadow-md p-4 flex flex-col relative">
-    <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-lg mb-3">
-    <div class="flex flex-col items-start">
+    <div class="relative">
+      <div class="carousel-container overflow-hidden rounded-lg relative">
+        <div class="carousel-inner flex transition-transform duration-300" [style.transform]="'translateX(-' + (product.currentImageIndex * 100) + '%)'">
+          <img *ngFor="let image of product.images"
+               [src]="image"
+               alt="{{ product.name }}"
+               class="w-full h-48 object-cover flex-shrink-0 flex-grow-0 w-full"
+          >
+        </div>
+
+        <!-- Flechas de navegación -->
+        <button
+          *ngIf="product.images.length > 1"
+          (click)="prevImage(product)"
+          class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/50 rounded-full p-2 hover:bg-white/75 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button
+          *ngIf="product.images.length > 1"
+          (click)="nextImage(product)"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/50 rounded-full p-2 hover:bg-white/75 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Indicadores de posición -->
+      <div *ngIf="product.images.length > 1" class="flex justify-center mt-2 space-x-2">
+        <span
+          *ngFor="let image of product.images; let i = index"
+          class="h-2 w-2 rounded-full"
+          [ngClass]="{
+            'bg-green-600': product.currentImageIndex === i,
+            'bg-gray-300': product.currentImageIndex !== i
+          }"
+        ></span>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start mt-3">
       <h3 class="text-lg font-bold text-gray-800 mb-1">{{ product.name }}</h3>
       <p class="text-green-600 font-bold text-xl mb-2">{{ product.price }}€</p>
       <button class="bg-green-500 text-black px-4 py-2 rounded-lg w-full font-semibold hover:bg-green-600 transition-colors">Comprar</button>
     </div>
+
     <div class="absolute top-4 right-4 text-green-500">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -18,12 +63,5 @@
   .bg-green-500 {
     background-color: #10b981;
   }
-
-  div {
-    transition: transform 0.2s ease-in-out;
-  }
-
-  div:hover {
-    transform: scale(1.05);
-  }
+  /* Elimino la transformación al pasar el cursor */
 </style>
