@@ -1,0 +1,29 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+  <div *ngFor="let product of products" class="bg-white border rounded-2xl shadow-md p-4 flex flex-col relative">
+    <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-lg mb-3">
+    <div class="flex flex-col items-start">
+      <h3 class="text-lg font-bold text-gray-800 mb-1">{{ product.name }}</h3>
+      <p class="text-green-600 font-bold text-xl mb-2">{{ product.price }}€</p>
+      <button class="bg-green-500 text-black px-4 py-2 rounded-lg w-full font-semibold hover:bg-green-600 transition-colors">Comprar</button>
+    </div>
+    <div class="absolute top-4 right-4 text-green-500">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bg-green-500 {
+    background-color: #10b981;
+  }
+
+  div {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  div:hover {
+    transform: scale(1.05);
+  }
+</style>
