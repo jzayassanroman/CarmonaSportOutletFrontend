@@ -1,0 +1,40 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+  <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Registro</h2>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-4">
+      <!-- Email Input -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu correo" />
+      </div>
+
+      <!-- Password Input -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu contraseña" />
+      </div>
+
+      <!-- Error Message -->
+      <p *ngIf="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</p>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition disabled:bg-gray-400"
+        [disabled]="loading || registerForm.invalid">
+        {{ loading ? 'Registrando...' : 'Registrarse' }}
+      </button>
+    </form>
+  </div>
+</div>
