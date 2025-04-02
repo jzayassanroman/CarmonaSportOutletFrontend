@@ -3,15 +3,15 @@
     <h2 class="text-2xl font-semibold text-center text-gray-800 mb-4">Registro</h2>
 
     <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-4">
-      <!-- Email Input -->
+      <!-- Username Input -->
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+        <label for="username" class="block text-sm font-medium text-gray-700">Nombre de Usuario</label>
         <input
-          id="email"
-          type="email"
-          formControlName="email"
+          id="username"
+          type="text"
+          formControlName="username"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
-          placeholder="Introduce tu correo" />
+          placeholder="Introduce tu nombre de usuario" />
       </div>
 
       <!-- Password Input -->
@@ -23,6 +23,61 @@
           formControlName="password"
           class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
           placeholder="Introduce tu contraseña" />
+      </div>
+
+      <!-- Nombre Input -->
+      <div>
+        <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          formControlName="nombre"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu nombre" />
+      </div>
+
+      <!-- Apellido Input -->
+      <div>
+        <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
+        <input
+          id="apellido"
+          type="text"
+          formControlName="apellido"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu apellido" />
+      </div>
+
+      <!-- Telefono Input -->
+      <div>
+        <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+        <input
+          id="telefono"
+          type="text"
+          formControlName="telefono"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu teléfono" />
+      </div>
+
+      <!-- Direccion Input -->
+      <div>
+        <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+        <input
+          id="direccion"
+          type="text"
+          formControlName="direccion"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu dirección" />
+      </div>
+
+      <!-- Email Input -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500"
+          placeholder="Introduce tu email" />
       </div>
 
       <!-- Error Message -->
