@@ -48,7 +48,7 @@ export class VerificacionComponent implements OnInit {
     this.authService.verifyUserCode(verificationData).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']); // Redirigir tras verificar
+        this.router.navigate(['/login']); // Redirigir tras verificar
       },
       error: (error) => {
         this.errorMessage = 'Código incorrecto o expirado. Por favor, inténtalo de nuevo.';
