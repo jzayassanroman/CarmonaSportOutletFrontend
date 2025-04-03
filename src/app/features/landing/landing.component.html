@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SportReuse - Marketplace Deportivo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+</head>
+<body class="bg-gray-50">
+<main>
+  <section class="relative h-[650px] overflow-hidden">
+    <div class="absolute inset-0 z-10 bg-gradient-to-r from-green-600/70 to-green-400/70 flex items-center">
+      <div class="container mx-auto px-6 relative z-20">
+        <div class="max-w-2xl">
+          <h2 class="text-5xl font-bold text-white mb-6">Renueva tu Equipo Deportivo</h2>
+          <p class="text-xl text-white mb-8">Compra y vende artículos deportivos de segunda mano. Ahorra dinero y cuida el planeta.</p>
+          <div class="flex space-x-4">
+            <a  class="bg-white text-green-600 px-6 py-3 rounded-full hover:bg-green-50 transition" (click)="redirectToLogin()">
+              Registrate Ahora
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold text-center mb-12 text-green-600">Cómo Funciona</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4 text-green-600">Publica</h3>
+        <p class="text-gray-700">Sube fotos y detalles de tu equipo deportivo en minutos.</p>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4 text-green-600">Conecta</h3>
+        <p class="text-gray-700">Chatea con compradores interesados directamente.</p>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-4 text-green-600">Vende</h3>
+        <p class="text-gray-700">Cierra tu venta de forma segura y sencilla.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-6 py-16">
+    <h2 class="text-3xl font-bold text-center mb-12 text-green-600">Categorías Populares</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
+        <img src="assets/img_2.png" alt="Running" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-green-600 mb-2">Running</h3>
+          <p class="text-gray-700">Zapatillas, ropa y accesorios para corredores.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
+        <img src="assets/img_3.png" alt="Ciclismo" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-green-600 mb-2">Ciclismo</h3>
+          <p class="text-gray-700">Bicicletas, equipamiento y componentes.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
+        <img src="assets/img_4.png" alt="Fitness" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-green-600 mb-2">Fitness</h3>
+          <p class="text-gray-700">Equipos de gimnasio y entrenamiento.</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition">
+        <img src="assets/img_5.png" alt="Deportes de Equipo" class="w-full h-56 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-green-600 mb-2">Hipica</h3>
+          <p class="text-gray-700">Equipamiento para diversos deportes colectivos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-green-600 text-white py-16">
+    <div class="container mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold mb-6">Únete a SportReuse</h2>
+      <p class="text-xl mb-8">Compra, vende y reutiliza. Menos desperdicio, más deporte.</p>
+      <a href="#" class="bg-white text-green-600 px-8 py-4 rounded-full text-lg hover:bg-green-50 transition">
+        Registrarse Gratis
+      </a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
