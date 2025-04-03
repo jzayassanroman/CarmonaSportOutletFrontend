@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isLoggedIn: boolean = true; // Simula autenticación, reemplaza con lógica real
+  isLoggedIn: boolean = true; // Simula autenticación, cámbialo según tu lógica real
   showDropdown: boolean = false;
 
   constructor(private router: Router) {}
@@ -28,7 +28,7 @@ export class NavbarComponent {
   logout(): void {
     alert('Cerrando sesión...');
     this.isLoggedIn = false;
-    this.router.navigate(['/login']); // Redirige tras cerrar sesión
+    this.router.navigate(['/login']); // Redirige a la página de login tras cerrar sesión
   }
 
 }
