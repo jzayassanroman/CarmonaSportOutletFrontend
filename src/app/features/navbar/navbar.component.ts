@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink,CommonModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isLoggedIn: boolean = true; // Simula autenticación, cámbialo según tu lógica real
+  isLoggedIn: boolean = false; // Simula autenticación, cámbialo según tu lógica real
   showDropdown: boolean = false;
 
   constructor(private router: Router) {}
