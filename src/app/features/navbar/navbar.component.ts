@@ -9,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  toNavigateToHome() {
+    window.location.href = '';
+  }
+  toNavigateToLogin() {
+    window.location.href = '/login';
+  }
+
+
 }

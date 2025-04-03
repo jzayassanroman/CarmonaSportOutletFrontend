@@ -36,6 +36,7 @@
         [disabled]="loading || loginForm.invalid">
         {{ loading ? 'Iniciando...' : 'Iniciar Sesión' }}
       </button>
+      Si no tienes cuenta, puedes registrarte <a (click)="toNavigateToRegisterUser()" class="text-green-600 hover:underline cursor-pointer">aquí</a>
     </form>
   </div>
 </div>

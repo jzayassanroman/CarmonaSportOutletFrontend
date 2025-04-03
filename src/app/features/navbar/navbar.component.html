@@ -1,7 +1,7 @@
 <nav class="flex items-center justify-between bg-white shadow-sm border-b-2 border-green-600">
   <!-- Logo -->
   <div class="flex items-center space-x-4 ml-8">
-    <img
+    <img (click)="toNavigateToHome()"
       src="../../../assets/image_29.png"
       alt="Carmona Sport Outlet Logo"
       class="w-36 h-36 "
@@ -73,7 +73,7 @@
       </svg>
     </button>
     <button class="text-gray-600 hover:text-green-600 transition-colors">
-      <svg
+      <svg (click)="toNavigateToLogin()"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

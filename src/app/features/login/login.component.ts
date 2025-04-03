@@ -11,7 +11,7 @@ import {CommonModule} from '@angular/common';
     ReactiveFormsModule,CommonModule
   ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginData).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']); // Redirigir tras iniciar sesión
+        this.router.navigate(['']); // Redirigir tras iniciar sesión
       },
       error: (error) => {
         this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
@@ -55,6 +55,10 @@ export class LoginComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+
+  toNavigateToRegisterUser() {
+    window.location.href = '/registeruser';
   }
 
 }
