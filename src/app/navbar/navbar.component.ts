@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,5 +9,26 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
+  isLoggedIn: boolean = true; // Simula autenticación, reemplaza con lógica real
+  showDropdown: boolean = false;
+
+  constructor(private router: Router) {}
+
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  closeDropdown(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('#userMenuButton') && !target.closest('#userDropdown')) {
+      this.showDropdown = false;
+    }
+  }
+
+  logout(): void {
+    alert('Cerrando sesión...');
+    this.isLoggedIn = false;
+    this.router.navigate(['/login']); // Redirige tras cerrar sesión
+  }
 
 }
