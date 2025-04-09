@@ -1,6 +1,7 @@
 <div>
   <h2>Administración de Productos</h2>
 
+  <!-- Formulario de creación -->
   <form (submit)="agregarProducto()">
     <input type="text" [(ngModel)]="nuevoProducto.nombre" name="nombre" placeholder="Nombre" required>
     <input type="text" [(ngModel)]="nuevoProducto.tipo" name="tipo" placeholder="Tipo" required>
@@ -8,14 +9,41 @@
     <input type="number" [(ngModel)]="nuevoProducto.precio" name="precio" placeholder="Precio" required>
     <input type="text" [(ngModel)]="nuevoProducto.imagen1" name="imagen1" placeholder="URL Imagen 1" required>
 
+    <select [(ngModel)]="nuevoProducto.entrega" name="entrega" required>
+      <option *ngFor="let entrega of entregas" [value]="entrega.value">{{ entrega.label }}</option>
+    </select>
+
     <select [(ngModel)]="nuevoProducto.estado" name="estado" required>
-      <option value="DISPONIBLE">Disponible</option>
-      <option value="NO_DISPONIBLE">No Disponible</option>
+      <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
     </select>
 
     <button type="submit">Crear Producto</button>
   </form>
 
+  <!-- Formulario de edición -->
+  <div *ngIf="productoEnEdicion">
+    <h3>Editando Producto: {{ productoEnEdicion.nombre }}</h3>
+    <form (submit)="guardarEdicion()">
+      <input type="text" [(ngModel)]="productoEnEdicion.nombre" name="editNombre" placeholder="Nombre" required>
+      <input type="text" [(ngModel)]="productoEnEdicion.tipo" name="editTipo" placeholder="Tipo" required>
+      <input type="text" [(ngModel)]="productoEnEdicion.descripcion" name="editDescripcion" placeholder="Descripción" required>
+      <input type="number" [(ngModel)]="productoEnEdicion.precio" name="editPrecio" placeholder="Precio" required>
+      <input type="text" [(ngModel)]="productoEnEdicion.imagen1" name="editImagen1" placeholder="URL Imagen 1" required>
+
+      <select [(ngModel)]="productoEnEdicion.entrega" name="editEntrega" required>
+        <option *ngFor="let entrega of entregas" [value]="entrega.value">{{ entrega.label }}</option>
+      </select>
+
+      <select [(ngModel)]="productoEnEdicion.estado" name="editEstado" required>
+        <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+      </select>
+
+      <button type="submit">Guardar Cambios</button>
+      <button type="button" (click)="cancelarEdicion()">Cancelar</button>
+    </form>
+  </div>
+
+  <!-- Tabla de productos -->
   <table>
     <tr>
       <th>Nombre</th>
@@ -28,9 +56,9 @@
       <td>{{ producto.nombre }}</td>
       <td>{{ producto.idCliente }}</td>
       <td>{{ producto.descripcion }}</td>
-      <td>{{ producto.estado }}</td>
+      <td>{{ obtenerNombreEstado(producto.estado) }}</td>
       <td>
-        <button (click)="editarProducto(producto)">Editar</button>
+        <button (click)="iniciarEdicion(producto)">Editar</button>
         <button (click)="eliminarProducto(producto.id!)">Eliminar</button>
       </td>
     </tr>

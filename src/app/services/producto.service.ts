@@ -13,7 +13,7 @@ export class ProductoService {
 
   // Método para obtener el token del LocalStorage
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // Asegúrate de que el token existe
+    const token = localStorage.getItem('authToken'); // Asegúrate de que el token existe
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 

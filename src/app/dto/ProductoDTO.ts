@@ -8,8 +8,8 @@ export interface ProductoDTO {
   imagen2?: string;
   imagen3?: string;
   imagen4?: string;
-  entrega: 'DOMICILIO' | 'TIENDA';
-  estado: 'DISPONIBLE' | 'NO_DISPONIBLE';
+  entrega: number; // 0 = RECOGIDA, 1 = ENVIO_DOMICILIO
+  estado: number;  // 0 = CANCELADO, 1 = EN_CURSO, 2 = ENVIADO, 3 = ENTREGADO
   disponible: boolean;
   idCliente: number;
 }
