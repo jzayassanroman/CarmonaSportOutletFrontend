@@ -24,7 +24,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   loadProducts() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     if (!token) {
       console.error('No hay token en localStorage');
       return;

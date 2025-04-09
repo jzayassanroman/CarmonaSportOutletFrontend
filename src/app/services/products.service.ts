@@ -12,6 +12,11 @@ export class ProductService {
   constructor(private http: HttpClient) {}
   @Output() productoCreado = new EventEmitter<any>();
 
+  // private getAuthHeaders(): HttpHeaders {
+  //   const token = localStorage.getItem('authToken');
+  //  return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  // }
+
   getProductsByClientId(clientId: number, token: string): Observable<any[]> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`  // Agregamos el token en los headers

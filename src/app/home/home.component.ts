@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../services/products.service';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -50,9 +51,12 @@ export class HomeComponent implements OnInit {
   }
 
   actualizarEstadoLogin() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
+    console.log('[TOKEN DETECTADO]', token);
     this.isLoggedIn = !!token;
+    console.log('[ESTADO LOGIN]', this.isLoggedIn);
   }
+
 
   toggleFormulario() {
     this.mostrarFormulario = !this.mostrarFormulario;
@@ -63,7 +67,7 @@ export class HomeComponent implements OnInit {
   }
 
   obtenerIdCliente() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
 
     if (!token) {
       console.warn('Token no encontrado en localStorage.');
@@ -73,7 +77,7 @@ export class HomeComponent implements OnInit {
     try {
       // Partimos el token en sus tres partes: header.payload.signature
       const payloadBase64 = token.split('.')[1];
-      const payloadJson = atob(payloadBase64); // decodificamos Base64
+      const payloadJson = atob(payloadBase64);
       const payload = JSON.parse(payloadJson);
 
       const idCliente = payload.clienteId;
@@ -95,7 +99,7 @@ export class HomeComponent implements OnInit {
 
 
   crearProducto() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     if (!token) {
       console.error('No se encontró un token en localStorage.');
       return;

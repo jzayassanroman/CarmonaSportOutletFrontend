@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     if (token) {
@@ -53,10 +53,10 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('authToken');
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
   }
 }
