@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
 
@@ -11,11 +11,21 @@ import {CommonModule} from '@angular/common';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
-  isLoggedIn: boolean = false; // Simula autenticación, cámbialo según tu lógica real
+export class NavbarComponent implements OnInit {
+  isLoggedIn: boolean = false;  // Asumimos que el usuario no está logueado
   showDropdown: boolean = false;
 
   constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.checkLoginStatus();  // Verificar el estado de login cuando se inicializa el componente
+  }
+
+  // Método para verificar si el usuario está logueado
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('token');  // Recuperamos el token del localStorage
+    this.isLoggedIn = token !== null;  // Si el token está presente, consideramos al usuario como logueado
+  }
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
@@ -29,9 +39,9 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    alert('Cerrando sesión...');
-    this.isLoggedIn = false;
-    this.router.navigate(['/login']); // Redirige a la página de login tras cerrar sesión
+    localStorage.removeItem('token');  // Eliminamos el token
+    this.isLoggedIn = false;  // Cambiamos el estado de autenticación
+    this.router.navigate(['/login']);  // Redirigimos al login
   }
 
 }

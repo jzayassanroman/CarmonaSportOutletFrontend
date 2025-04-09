@@ -97,6 +97,7 @@
       <div *ngIf="showDropdown" id="userDropdown"
            class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
         <ul class="py-2">
+          <!-- Mis Productos y Cerrar Sesión solo cuando está logueado -->
           <li *ngIf="isLoggedIn">
             <a routerLink="/mis-productos" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
               Mis Productos
@@ -107,11 +108,14 @@
               Cerrar Sesión
             </button>
           </li>
+
+          <!-- Iniciar Sesión solo cuando NO está logueado -->
           <li *ngIf="!isLoggedIn">
             <a routerLink="/login" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
               Iniciar Sesión
             </a>
           </li>
+
         </ul>
       </div>
     </div>
