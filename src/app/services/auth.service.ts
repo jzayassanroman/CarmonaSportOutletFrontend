@@ -42,15 +42,15 @@ export class AuthService {
 
 
   login(credentials: any): Observable<any> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => {
-        if (response.token) {
-          localStorage.setItem('token', response.token);
+    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+      tap((response: any) => {
+        // Aquí guardamos el token en el localStorage
+        if (response && response.token) {
+          localStorage.setItem('authToken', response.token); // Guarda el token
         }
       })
     );
   }
-
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');

@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginData).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['']); // Redirigir tras iniciar sesión
+        this.router.navigate(['/home']); // Redirigir tras iniciar sesión
       },
       error: (error) => {
         this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
