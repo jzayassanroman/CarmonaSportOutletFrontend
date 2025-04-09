@@ -23,9 +23,10 @@ export class NavbarComponent implements OnInit {
 
   // Método para verificar si el usuario está logueado
   checkLoginStatus(): void {
-    const token = localStorage.getItem('token');  // Recuperamos el token del localStorage
-    this.isLoggedIn = token !== null;  // Si el token está presente, consideramos al usuario como logueado
+    const token = localStorage.getItem('authToken');
+    this.isLoggedIn = token !== null;
   }
+
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
@@ -39,9 +40,10 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');  // Eliminamos el token
-    this.isLoggedIn = false;  // Cambiamos el estado de autenticación
-    this.router.navigate(['/login']);  // Redirigimos al login
+    localStorage.removeItem('authToken');
+    this.isLoggedIn = false;
+    this.router.navigate(['/login']);
   }
+
 
 }
