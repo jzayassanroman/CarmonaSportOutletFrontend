@@ -1,0 +1,38 @@
+<div>
+  <h2>Administración de Productos</h2>
+
+  <form (submit)="agregarProducto()">
+    <input type="text" [(ngModel)]="nuevoProducto.nombre" name="nombre" placeholder="Nombre" required>
+    <input type="text" [(ngModel)]="nuevoProducto.tipo" name="tipo" placeholder="Tipo" required>
+    <input type="text" [(ngModel)]="nuevoProducto.descripcion" name="descripcion" placeholder="Descripción" required>
+    <input type="number" [(ngModel)]="nuevoProducto.precio" name="precio" placeholder="Precio" required>
+    <input type="text" [(ngModel)]="nuevoProducto.imagen1" name="imagen1" placeholder="URL Imagen 1" required>
+
+    <select [(ngModel)]="nuevoProducto.estado" name="estado" required>
+      <option value="DISPONIBLE">Disponible</option>
+      <option value="NO_DISPONIBLE">No Disponible</option>
+    </select>
+
+    <button type="submit">Crear Producto</button>
+  </form>
+
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Cliente</th>
+      <th>Descripción</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+    <tr *ngFor="let producto of productos">
+      <td>{{ producto.nombre }}</td>
+      <td>{{ producto.idCliente }}</td>
+      <td>{{ producto.descripcion }}</td>
+      <td>{{ producto.estado }}</td>
+      <td>
+        <button (click)="editarProducto(producto)">Editar</button>
+        <button (click)="eliminarProducto(producto.id!)">Eliminar</button>
+      </td>
+    </tr>
+  </table>
+</div>
