@@ -1,5 +1,10 @@
+export interface ClienteDTO {
+  id: number;
+  nombre: string;
+}
+
 export interface ProductoDTO {
-  id?: number; // Opcional porque en la creación no lo tendremos
+  id?: number;
   nombre: string;
   tipo: string;
   descripcion: string;
@@ -8,8 +13,10 @@ export interface ProductoDTO {
   imagen2?: string;
   imagen3?: string;
   imagen4?: string;
-  entrega: number; // 0 = RECOGIDA, 1 = ENVIO_DOMICILIO
-  estado: number;  // 0 = CANCELADO, 1 = EN_CURSO, 2 = ENVIADO, 3 = ENTREGADO
+  entrega: number;
+  estado: number;
   disponible: boolean;
   idCliente: number;
+  cliente?: ClienteDTO; // Campo opcional
+  nombreCliente?: string; // Agregar esta propiedad
 }
