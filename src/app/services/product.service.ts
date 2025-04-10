@@ -15,7 +15,10 @@ export class ProductService {
   private getAuthHeaders(token: string): HttpHeaders {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
-
+  getAllProductos(token: string): Observable<any[]> {
+    const headers = this.getAuthHeaders(token);
+    return this.http.get<any[]>('http://localhost:8081/productos/all', { headers });
+  }
   getProductsByClientId(clientId: number, token: string): Observable<any[]> {
     const headers = this.getAuthHeaders(token);
 

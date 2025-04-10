@@ -4,11 +4,12 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
+import { TarjetahomeComponent } from '../tarjetahome/tarjetahome.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProductCardComponent, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TarjetahomeComponent, TarjetahomeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -92,8 +93,7 @@ export class HomeComponent implements OnInit {
     this.productService.crearProducto(this.producto, token).subscribe({
       next: (response) => {
         console.log('Producto creado exitosamente:', response);
-        this.limpiarFormulario();
-        this.cerrarFormulario();
+        location.reload(); // Recargar la página automáticamente
       },
       error: (error) => {
         console.error('Error al crear el producto:', error);
