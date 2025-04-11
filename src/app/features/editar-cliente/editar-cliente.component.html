@@ -1,0 +1,94 @@
+  <div class="max-w-4xl mx-auto p-6 border-2 border-green-500 rounded-lg mt-7 mb-7">
+    <h1 class="text-3xl font-bold text-center mb-8 border-b pb-2">Editar Cliente</h1>
+
+    <div *ngIf="errorMensaje" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ errorMensaje }}
+    </div>
+
+    <div *ngIf="cargando" class="text-center py-4">
+      <p>Cargando datos...</p>
+    </div>
+
+    <form [formGroup]="clienteForm" (ngSubmit)="guardarCambios()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Primera columna -->
+      <div class="space-y-6">
+        <div>
+          <label for="nombre" class="block text-sm font-medium mb-1">Nombre *</label>
+          <input
+            id="nombre"
+            type="text"
+            formControlName="nombre"
+            placeholder="Nombre"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label for="apellido" class="block text-sm font-medium mb-1">Apellido *</label>
+          <input
+            id="apellido"
+            type="text"
+            formControlName="apellido"
+            placeholder="Apellido"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+
+        </div>
+        <div>
+          <label for="correoElectronico" class="block text-sm font-medium mb-1">Correo Electrónico *</label>
+          <input
+            id="correoElectronico"
+            type="email"
+            formControlName="correoElectronico"
+            placeholder="Correo Electrónico"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+
+        </div>
+      </div>
+
+      <!-- Segunda columna -->
+      <div class="space-y-6">
+        <div>
+          <label for="direccion" class="block text-sm font-medium mb-1">Dirección</label>
+          <input
+            id="direccion"
+            type="text"
+            formControlName="direccion"
+            placeholder="Dirección"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+        </div>
+        <div>
+          <label for="telefono" class="block text-sm font-medium mb-1">Teléfono *</label>
+          <input
+            id="telefono"
+            type="tel"
+            formControlName="telefono"
+            placeholder="Teléfono"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+
+        </div>
+        <div>
+          <label for="nombreUsuario" class="block text-sm font-medium mb-1">Nombre de usuario *</label>
+          <input
+            id="nombreUsuario"
+            type="text"
+            formControlName="nombreUsuario"
+            placeholder="Nombre de usuario"
+            class="w-full px-4 py-3 border-2 border-black rounded-md focus:outline-none focus:border-green-500">
+
+        </div>
+      </div>
+
+      <!-- Botones a lo ancho -->
+      <div class="md:col-span-2 mt-4 flex gap-4">
+        <button
+          type="submit"
+          [disabled]="clienteForm.invalid || enviando"
+          class="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-md transition duration-300 disabled:bg-gray-400">
+          {{ enviando ? 'Guardando...' : 'Guardar Cambios' }}
+        </button>
+        <button
+          type="button"
+          class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-6 rounded-md transition duration-300">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
