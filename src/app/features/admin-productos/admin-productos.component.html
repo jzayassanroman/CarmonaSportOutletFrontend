@@ -93,8 +93,55 @@
         </button>
       </div>
       <form (submit)="agregarProducto()" class="p-6">
-        <!-- Form fields for creating a product -->
-        <!-- Same as in the original code -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Nombre</label>
+          <input type="text" [(ngModel)]="nuevoProducto.nombre" name="nombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Tipo</label>
+          <input type="text" [(ngModel)]="nuevoProducto.tipo" name="tipo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Descripción</label>
+          <textarea [(ngModel)]="nuevoProducto.descripcion" name="descripcion" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Precio</label>
+          <input type="number" [(ngModel)]="nuevoProducto.precio" name="precio" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">URL Imagen</label>
+          <input type="text" [(ngModel)]="nuevoProducto.imagen1" name="imagen1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Tipo de entrega</label>
+          <select [(ngModel)]="nuevoProducto.entrega" name="entrega" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option *ngFor="let entrega of entregas" [value]="entrega.value">{{ entrega.label }}</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Estado</label>
+          <select [(ngModel)]="nuevoProducto.estado" name="estado" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Disponibilidad</label>
+          <div class="mt-1">
+            <label class="inline-flex items-center">
+              <input type="radio" [value]="true" [(ngModel)]="nuevoProducto.disponible" name="disponible" class="form-radio">
+              <span class="ml-2">Disponible</span>
+            </label>
+            <label class="inline-flex items-center ml-6">
+              <input type="radio" [value]="false" [(ngModel)]="nuevoProducto.disponible" name="disponible" class="form-radio">
+              <span class="ml-2">No disponible</span>
+            </label>
+          </div>
+        </div>
+        <div class="mt-5 flex justify-end">
+          <button type="button" (click)="cerrarModalCrear()" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md mr-3">Cancelar</button>
+          <button type="submit" class="bg-[#00D26A] text-white px-4 py-2 rounded-md">Crear Producto</button>
+        </div>
       </form>
     </div>
   </div>
@@ -111,8 +158,55 @@
         </button>
       </div>
       <form (submit)="guardarEdicion()" class="p-6">
-        <!-- Form fields for editing a product -->
-        <!-- Same as in the original code -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Nombre</label>
+          <input type="text" [(ngModel)]="productoEnEdicion.nombre" name="editNombre" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Tipo</label>
+          <input type="text" [(ngModel)]="productoEnEdicion.tipo" name="editTipo" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Descripción</label>
+          <textarea [(ngModel)]="productoEnEdicion.descripcion" name="editDescripcion" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Precio</label>
+          <input type="number" [(ngModel)]="productoEnEdicion.precio" name="editPrecio" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">URL Imagen</label>
+          <input type="text" [(ngModel)]="productoEnEdicion.imagen1" name="editImagen1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Tipo de entrega</label>
+          <select [(ngModel)]="productoEnEdicion.entrega" name="editEntrega" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option *ngFor="let entrega of entregas" [value]="entrega.value">{{ entrega.label }}</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Estado</label>
+          <select [(ngModel)]="productoEnEdicion.estado" name="editEstado" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option *ngFor="let estado of estados" [value]="estado.value">{{ estado.label }}</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700">Disponibilidad</label>
+          <div class="mt-1">
+            <label class="inline-flex items-center">
+              <input type="radio" [value]="true" [(ngModel)]="productoEnEdicion.disponible" name="editDisponible" class="form-radio">
+              <span class="ml-2">Disponible</span>
+            </label>
+            <label class="inline-flex items-center ml-6">
+              <input type="radio" [value]="false" [(ngModel)]="productoEnEdicion.disponible" name="editDisponible" class="form-radio">
+              <span class="ml-2">No disponible</span>
+            </label>
+          </div>
+        </div>
+        <div class="mt-5 flex justify-end">
+          <button type="button" (click)="cancelarEdicion()" class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md mr-3">Cancelar</button>
+          <button type="submit" class="bg-[#00D26A] text-white px-4 py-2 rounded-md">Guardar Cambios</button>
+        </div>
       </form>
     </div>
   </div>
