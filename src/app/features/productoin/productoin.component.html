@@ -1,0 +1,79 @@
+<div class="font-poppins bg-gray-50 text-gray-800">
+  <main class="container mx-auto py-12 px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+    <!-- Carrusel -->
+    <div class="relative bg-gradient-to-t from-gray-200 to-white rounded-xl overflow-hidden shadow-xl transition-transform duration-500 hover:shadow-2xl">
+      <div class="carousel-container overflow-hidden relative">
+        <div class="carousel-inner flex transition-transform duration-300"
+             [style.transform]="'translateX(-' + (currentImageIndex * 100) + '%)'">
+          <img *ngFor="let image of product.images"
+               [src]="image"
+               alt="{{ product.name }}"
+               class="w-full h-72 md:h-96 object-cover flex-shrink-0 flex-grow-0 rounded-md shadow-md">
+        </div>
+
+        <!-- Flechas -->
+        <button *ngIf="product.images.length > 1" (click)="prevImage()"
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/60 rounded-full p-3 hover:bg-white/80 transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <button *ngIf="product.images.length > 1" (click)="nextImage()"
+                class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/60 rounded-full p-3 hover:bg-white/80 transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Indicadores -->
+      <div *ngIf="product.images.length > 1" class="flex justify-center mt-4 mb-2 space-x-2">
+        <span *ngFor="let image of product.images; let i = index"
+              class="h-3 w-3 rounded-full cursor-pointer transition-all duration-300"
+              [ngClass]="{
+                'bg-green-600': currentImageIndex === i,
+                'bg-gray-300': currentImageIndex !== i
+              }"
+              (click)="setCurrentImage(i)">
+        </span>
+      </div>
+    </div>
+
+    <!-- Información -->
+    <div class="flex flex-col gap-6">
+      <!-- Nombre del producto -->
+      <h1 class="text-3xl font-semibold text-gray-900 border-b-4 border-green-500 inline-block pb-2">
+        {{ product.name }}
+      </h1>
+
+      <!-- Info adicional: cliente y precio -->
+      <div class="flex flex-col gap-3 text-sm text-gray-700">
+        <p class="flex items-center gap-2 text-gray-600">
+          <span class="font-semibold text-green-600">Publicado por:</span>
+          <span class="text-gray-800">{{ product.clientName }}</span>
+        </p>
+        <p class="flex items-center gap-2 text-gray-600">
+          <span class="font-semibold text-green-600">Precio:</span>
+          <span class="text-gray-900 text-lg font-medium">{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</span>
+        </p>
+      </div>
+
+      <!-- Descripción del producto -->
+      <p class="text-gray-700 leading-relaxed">{{ product.description }}</p>
+
+      <!-- Botones -->
+      <div class="flex gap-6 mt-6">
+        <button class="bg-black text-white px-8 py-4 rounded-md font-semibold hover:bg-gray-900 transition-all duration-300">Chat</button>
+        <button class="bg-green-600 text-white px-8 py-4 rounded-md font-semibold hover:bg-green-700 transition-all duration-300">Comprar</button>
+      </div>
+
+      <!-- Beneficios del producto -->
+      <ul class="text-sm mt-6 space-y-3 text-gray-700">
+        <li class="flex items-center gap-2 text-green-600"><span class="font-bold">✔</span> Envío gratuito a toda la península</li>
+        <li class="flex items-center gap-2 text-green-600"><span class="font-bold">✔</span> Garantía de 2 años</li>
+        <li class="flex items-center gap-2 text-green-600"><span class="font-bold">✔</span> Servicio post-instalación</li>
+      </ul>
+    </div>
+  </main>
+</div>

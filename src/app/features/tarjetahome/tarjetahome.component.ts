@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tarjetahome',
@@ -14,7 +15,7 @@ import { ProductService } from '../../services/product.service';
 export class TarjetahomeComponent implements OnInit {
   products: any[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private router: Router) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -30,6 +31,7 @@ export class TarjetahomeComponent implements OnInit {
     this.productService.getAllProductos(token).subscribe(
       (response) => {
         this.products = response.map((product) => ({
+          id: product.id, // Asegúrate de incluir el ID
           name: product.nombre,
           price: product.precio,
           images: [product.imagen1, product.imagen2, product.imagen3, product.imagen4].filter((img) => img),
@@ -47,5 +49,9 @@ export class TarjetahomeComponent implements OnInit {
 
   prevImage(product: any) {
     product.currentImageIndex = (product.currentImageIndex - 1 + product.images.length) % product.images.length;
+  }
+
+  goToProduct(product: any) {
+    this.router.navigate(['/productoin'], { queryParams: { id: product.id } });
   }
 }
