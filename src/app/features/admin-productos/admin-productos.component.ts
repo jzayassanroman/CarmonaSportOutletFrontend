@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminProductosComponent implements OnInit {
   productos: ProductoDTO[] = [];
+  textoBusqueda: string = '';
   modalCrearVisible: boolean = false;
 
   entregas = [
@@ -50,6 +51,22 @@ export class AdminProductosComponent implements OnInit {
   ngOnInit(): void {
     this.cargarProductos();
   }
+
+  get productosFiltrados(): ProductoDTO[] {
+    if (!this.textoBusqueda.trim()) {
+      return this.productos;
+    }
+
+    const termino = this.textoBusqueda.toLowerCase();
+
+    return this.productos.filter(p =>
+      p.nombre.toLowerCase().includes(termino) ||
+      p.descripcion.toLowerCase().includes(termino) ||
+      p.tipo?.toLowerCase().includes(termino) ||
+      p.nombreCliente?.toLowerCase().includes(termino)
+    );
+  }
+
 
   cargarProductos(): void {
     this.productoService.getProductos().subscribe(data => {
