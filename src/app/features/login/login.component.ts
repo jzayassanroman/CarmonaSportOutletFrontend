@@ -57,4 +57,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  redirectToRegister(): void {
+    this.router.navigate(['/registeruser']);
+  }
+
 }

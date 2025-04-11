@@ -6,6 +6,8 @@ import {RegistroclienteComponent} from './features/registro-cliente/registroclie
 import {VerificacionComponent} from './features/verificacion/verificacion.component';
 import {LoginComponent} from './features/login/login.component';
 import {LandingComponent} from './features/landing/landing.component';
+import {ProductoInComponent} from './features/producto-in/producto-in.component';
+import {EditarClienteComponent} from './features/editar-cliente/editar-cliente.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -13,6 +15,8 @@ export const routes: Routes = [
   {path: 'verify', component: VerificacionComponent },
   {path: 'login', component: LoginComponent},
   {path: 'productocard', component:ProductCardComponent },
+  {path:'productcard/:id', component:ProductoInComponent },
   {path: 'home', component: HomeComponent},
   {path: '', component: LandingComponent},
+  {path:'editar-cliente', component:EditarClienteComponent },
 ];
