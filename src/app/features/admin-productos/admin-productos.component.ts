@@ -17,6 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminProductosComponent implements OnInit {
   productos: ProductoDTO[] = [];
+  textoBusqueda: string = '';
+  modalCrearVisible: boolean = false;
 
   entregas = [
     { label: 'RECOGIDA', value: 0 },
@@ -50,16 +52,41 @@ export class AdminProductosComponent implements OnInit {
     this.cargarProductos();
   }
 
+  get productosFiltrados(): ProductoDTO[] {
+    if (!this.textoBusqueda.trim()) {
+      return this.productos;
+    }
+
+    const termino = this.textoBusqueda.toLowerCase();
+
+    return this.productos.filter(p =>
+      p.nombre.toLowerCase().includes(termino) ||
+      p.descripcion.toLowerCase().includes(termino) ||
+      p.tipo?.toLowerCase().includes(termino) ||
+      p.nombreCliente?.toLowerCase().includes(termino)
+    );
+  }
+
+
   cargarProductos(): void {
     this.productoService.getProductos().subscribe(data => {
-      this.productos = data;
+      this.productos = data; // Asignar directamente los datos del backend
     });
+  }
+
+  mostrarModalCrear(): void {
+    this.resetForm();
+    this.modalCrearVisible = true;
+  }
+
+  cerrarModalCrear(): void {
+    this.modalCrearVisible = false;
   }
 
   agregarProducto(): void {
     this.productoService.crearProducto(this.nuevoProducto).subscribe(() => {
       this.cargarProductos();
-      this.resetForm();
+      this.cerrarModalCrear();
     });
   }
 
@@ -81,9 +108,11 @@ export class AdminProductosComponent implements OnInit {
   }
 
   eliminarProducto(id: number): void {
-    this.productoService.eliminarProducto(id).subscribe(() => {
-      this.cargarProductos();
-    });
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+      this.productoService.eliminarProducto(id).subscribe(() => {
+        this.cargarProductos();
+      });
+    }
   }
 
   resetForm(): void {
