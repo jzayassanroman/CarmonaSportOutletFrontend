@@ -8,6 +8,7 @@ import {VerificacionComponent} from './features/verificacion/verificacion.compon
 import {LoginComponent} from './features/login/login.component';
 import {LandingComponent} from './features/landing/landing.component';
 import {AdminProductosComponent} from './features/admin-productos/admin-productos.component';
+import {ProductoinComponent} from './features/productoin/productoin.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', component: LandingComponent},
   {path: 'admin-productos', component: AdminProductosComponent },
+  { path: 'productoin', component: ProductoinComponent },
 
 ];
