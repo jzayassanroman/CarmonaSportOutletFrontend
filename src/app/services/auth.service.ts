@@ -52,12 +52,29 @@ export class AuthService {
     );
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  getUserIdFromToken(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.id || payload.userId || null; // Ajustar según cómo guardes el ID
+    } catch (e) {
+      console.error('Token inválido');
+      return null;
+    }
+  }
+
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken');
+    return !!localStorage.getItem('token');
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
   }
 }

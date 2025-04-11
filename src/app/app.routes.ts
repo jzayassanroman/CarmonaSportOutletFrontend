@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import {NavbarComponent} from './features/navbar/navbar.component';
 import {ProductCardComponent} from './features/product-card/product-card.component';
 import {HomeComponent} from './features/home/home.component';
 import {RegistroComponent} from './features/registro/registro.component';
@@ -7,6 +6,8 @@ import {RegistroclienteComponent} from './features/registro-cliente/registroclie
 import {VerificacionComponent} from './features/verificacion/verificacion.component';
 import {LoginComponent} from './features/login/login.component';
 import {LandingComponent} from './features/landing/landing.component';
+import {ProductoInComponent} from './features/producto-in/producto-in.component';
+import {EditarClienteComponent} from './features/editar-cliente/editar-cliente.component';
 import {AdminProductosComponent} from './features/admin-productos/admin-productos.component';
 import {ProductoinComponent} from './features/productoin/productoin.component';
 
@@ -21,4 +22,5 @@ export const routes: Routes = [
   {path: 'admin-productos', component: AdminProductosComponent },
   { path: 'productoin', component: ProductoinComponent },
 
+  {path:'editar-cliente', component:EditarClienteComponent },
 ];
