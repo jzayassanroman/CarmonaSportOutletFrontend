@@ -1,0 +1,56 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10 font-poppins">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-green-600 inline-block pb-1">Editar producto</h2>
+  <form [formGroup]="productForm" (ngSubmit)="editarProducto()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Nombre</label>
+      <input formControlName="nombre" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Tipo</label>
+      <input formControlName="tipo" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="block text-gray-700 font-semibold">Descripción</label>
+      <textarea formControlName="descripcion" rows="3" class="form-textarea w-full border p-2 rounded"></textarea>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Precio</label>
+      <input type="number" formControlName="precio" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Imagen 1</label>
+      <input formControlName="imagen1" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Imagen 2</label>
+      <input formControlName="imagen2" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Imagen 3</label>
+      <input formControlName="imagen3" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Imagen 4</label>
+      <input formControlName="imagen4" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-semibold">Estado</label>
+      <input formControlName="estado" class="form-input w-full border p-2 rounded" />
+    </div>
+
+    <div class="md:col-span-2">
+      <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 rounded hover:bg-green-700 transition duration-300">
+        Guardar Cambios
+      </button>
+    </div>
+  </form>
+</div>
