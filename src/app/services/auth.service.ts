@@ -51,6 +51,16 @@ export class AuthService {
       })
     );
   }
+  obtenerUsuarioLogueado(): any {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('Usuario logueado:', payload);  // Verifica que se esté extrayendo correctamente el usuario
+      return payload;
+    }
+    return null;
+  }
+
 
 
   isLoggedIn(): boolean {
