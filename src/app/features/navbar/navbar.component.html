@@ -75,8 +75,11 @@
 
     <!-- Botón de usuario con dropdown -->
     <div class="relative" (document:click)="closeDropdown($event)">
-      <button id="userMenuButton" (click)="toggleDropdown()"
-              class="text-gray-600 hover:text-green-600 transition-colors focus:outline-none">
+      <button id="userMenuButton"
+              (click)="toggleDropdown()"
+              [attr.aria-expanded]="showDropdown"
+              aria-haspopup="true"
+              class="text-gray-600 hover:text-green-600 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1 rounded-full p-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -94,29 +97,47 @@
       </button>
 
       <!-- Dropdown menu dentro del botón -->
-      <div *ngIf="showDropdown" id="userDropdown"
-           class="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-        <ul class="py-2">
+      <div *ngIf="showDropdown"
+           id="userDropdown"
+           class="absolute right-0 mt-3 w-56 bg-white border border-gray-100 rounded-lg shadow-lg z-10 transform origin-top-right transition-all duration-150 ease-out"
+           role="menu"
+           aria-labelledby="userMenuButton">
+        <div class="py-2 px-1">
           <!-- Mis Productos y Cerrar Sesión solo cuando está logueado -->
-          <li *ngIf="isLoggedIn">
-            <a routerLink="/mis-productos" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-              Mis Productos
+          <div *ngIf="isLoggedIn" class="space-y-1">
+            <a routerLink="/mis-productos"
+               class="flex items-center px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
+               role="menuitem">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span>Mis Productos</span>
             </a>
-          </li>
-          <li *ngIf="isLoggedIn">
-            <button (click)="logout()" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-              Cerrar Sesión
+
+            <div class="border-t border-gray-100 my-1"></div>
+
+            <button (click)="logout()"
+                    class="flex items-center w-full px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
+                    role="menuitem">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              <span>Cerrar Sesión</span>
             </button>
-          </li>
+          </div>
 
           <!-- Iniciar Sesión solo cuando NO está logueado -->
-          <li *ngIf="!isLoggedIn">
-            <a routerLink="/login" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-              Iniciar Sesión
+          <div *ngIf="!isLoggedIn">
+            <a routerLink="/login"
+               class="flex items-center px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
+               role="menuitem">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+              <span>Iniciar Sesión</span>
             </a>
-          </li>
-
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
