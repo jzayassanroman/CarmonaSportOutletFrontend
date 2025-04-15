@@ -1,0 +1,385 @@
+<!-- payment.component.html -->
+<div class="min-h-screen bg-white py-8">
+  <div class="max-w-4xl mx-auto px-4">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Finalizar Compra</h1>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+      <!-- Información Personal -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Información Personal</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <input
+              type="text"
+              formControlName="firstName"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['firstName'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Apellidos</label>
+            <input
+              type="text"
+              formControlName="lastName"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['lastName'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+            <input
+              type="text"
+              formControlName="address"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['address'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
+            <input
+              type="text"
+              formControlName="zipCode"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['zipCode'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
+            <input
+              type="text"
+              formControlName="province"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['province'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+            <input
+              type="text"
+              formControlName="city"
+              class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+            <div *ngIf="submitted && f['city'].errors" class="text-red-500 text-sm mt-1">
+              Este campo es obligatorio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selector de Método de Pago -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Método de Pago</h2>
+
+        <div class="mb-8">
+          <div class="flex space-x-4">
+            <div
+              (click)="selectPaymentMethod('card')"
+              class="flex-1 p-4 border rounded-lg cursor-pointer transition-all duration-300"
+              [ngClass]="{'border-green-500 bg-green-50': paymentMethod === 'card', 'border-gray-200': paymentMethod !== 'card'}"
+            >
+              <div class="flex items-center">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center border" [ngClass]="{'border-green-500': paymentMethod === 'card', 'border-gray-300': paymentMethod !== 'card'}">
+                  <div *ngIf="paymentMethod === 'card'" class="w-4 h-4 rounded-full bg-green-500"></div>
+                </div>
+                <span class="ml-2 font-medium">Tarjeta de Crédito</span>
+              </div>
+            </div>
+
+            <div
+              (click)="selectPaymentMethod('paypal')"
+              class="flex-1 p-4 border rounded-lg cursor-pointer transition-all duration-300"
+              [ngClass]="{'border-green-500 bg-green-50': paymentMethod === 'paypal', 'border-gray-200': paymentMethod !== 'paypal'}"
+            >
+              <div class="flex items-center">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center border" [ngClass]="{'border-green-500': paymentMethod === 'paypal', 'border-gray-300': paymentMethod !== 'paypal'}">
+                  <div *ngIf="paymentMethod === 'paypal'" class="w-4 h-4 rounded-full bg-green-500"></div>
+                </div>
+                <span class="ml-2 font-medium">PayPal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Crédito -->
+        <div *ngIf="paymentMethod === 'card'" class="mt-2">
+          <!-- Visualización de la tarjeta -->
+          <div class="perspective-1000 w-full h-56 mb-10">
+            <div
+              class="relative w-full h-full transition-transform duration-700 preserve-3d"
+              [ngClass]="{'rotate-y-180': cardFlipped}"
+              (mouseenter)="cardHover = true"
+              (mouseleave)="cardHover = false"
+              (mousemove)="moveCard($event)"
+              [style.transform]="cardHover ? cardTransform : ''"
+            >
+              <!-- Frente de la tarjeta -->
+              <div class="absolute w-full h-full backface-hidden rounded-xl shadow-xl overflow-hidden">
+                <div class="w-full h-full bg-gradient-to-r from-green-400 to-green-600 p-6 flex flex-col justify-between">
+                  <div class="flex justify-between items-center">
+                    <div class="w-12 h-10">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-full h-full">
+                        <path fill="#FFF" d="M32 10A32 32 0 0 1 42 12A32 32 0 0 1 32 14A32 32 0 0 1 22 12A32 32 0 0 1 32 10Z" />
+                        <path fill="#FFF" d="M16 10A32 32 0 0 1 26 12A32 32 0 0 1 16 14A32 32 0 0 1 6 12A32 32 0 0 1 16 10Z" />
+                      </svg>
+                    </div>
+                    <div class="text-white font-bold tracking-wider">
+                      CREDIT CARD
+                    </div>
+                  </div>
+
+                  <div class="w-full mb-4">
+                    <div class="w-12 h-10 bg-yellow-300 rounded-sm mb-6"></div>
+                    <div class="text-xl tracking-widest text-white font-mono relative overflow-hidden h-6">
+                      <span class="block transition-all duration-300">{{ displayCardNumber }}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex justify-between">
+                    <div class="text-white">
+                      <div class="text-xs opacity-80 mb-1">TITULAR</div>
+                      <div class="uppercase font-medium tracking-wider">{{ displayCardHolder }}</div>
+                    </div>
+                    <div class="text-white text-right">
+                      <div class="text-xs opacity-80 mb-1">CADUCA</div>
+                      <div class="font-medium">{{ displayExpiry }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reverso de la tarjeta -->
+              <div class="absolute w-full h-full backface-hidden rounded-xl shadow-xl rotate-y-180 overflow-hidden">
+                <div class="w-full h-full bg-gradient-to-r from-green-600 to-green-400">
+                  <div class="w-full h-12 bg-black mt-6"></div>
+                  <div class="px-6 mt-4">
+                    <div class="bg-white h-10 flex items-center px-3">
+                      <div class="flex-grow"></div>
+                      <div class="h-8 bg-white font-mono text-right pr-2 flex items-center">
+                        <span>{{ displayCVC }}</span>
+                      </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-16 h-12 opacity-60">
+                        <path fill="#FFF" d="M32 10A32 32 0 0 1 42 12A32 32 0 0 1 32 14A32 32 0 0 1 22 12A32 32 0 0 1 32 10Z" />
+                        <path fill="#FFF" d="M16 10A32 32 0 0 1 26 12A32 32 0 0 1 16 14A32 32 0 0 1 6 12A32 32 0 0 1 16 10Z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Número de Tarjeta</label>
+              <input
+                type="text"
+                formControlName="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                (focus)="cardFlipped = false"
+                (input)="formatCardNumber()"
+                maxlength="19"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+              <div *ngIf="submitted && f['cardNumber'].errors" class="text-red-500 text-sm mt-1">
+                Por favor, introduce un número de tarjeta válido
+              </div>
+            </div>
+
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Titular</label>
+              <input
+                type="text"
+                formControlName="cardHolder"
+                placeholder="Como aparece en la tarjeta"
+                (focus)="cardFlipped = false"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+              <div *ngIf="submitted && f['cardHolder'].errors" class="text-red-500 text-sm mt-1">
+                Este campo es obligatorio
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Fecha de Caducidad</label>
+              <input
+                type="text"
+                formControlName="expiryDate"
+                placeholder="MM/AA"
+                (focus)="cardFlipped = false"
+                (input)="formatExpiryDate()"
+                maxlength="5"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+              <div *ngIf="submitted && f['expiryDate'].errors" class="text-red-500 text-sm mt-1">
+                Fecha no válida
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">CVC</label>
+              <input
+                type="text"
+                formControlName="cvc"
+                placeholder="123"
+                (focus)="cardFlipped = true"
+                maxlength="3"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+              <div *ngIf="submitted && f['cvc'].errors" class="text-red-500 text-sm mt-1">
+                CVC no válido
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PayPal -->
+        <div *ngIf="paymentMethod === 'paypal'" class="mt-4">
+          <div class="bg-blue-50 rounded-xl overflow-hidden shadow-lg">
+            <div class="bg-blue-600 px-6 py-4">
+              <div class="flex justify-center items-center">
+                <div class="flex items-center">
+                  <span class="text-blue-100 font-bold text-3xl mr-1">Pay</span>
+                  <span class="text-white font-bold text-3xl">Pal</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6">
+              <div class="mb-8">
+                <p class="text-gray-700 text-center mb-6">Inicia sesión en tu cuenta de PayPal para completar el pago de forma segura.</p>
+
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                  <input
+                    type="email"
+                    formControlName="paypalEmail"
+                    placeholder="correo@ejemplo.com"
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                  <div *ngIf="submitted && paymentMethod === 'paypal' && !paymentForm.get('paypalEmail')?.value"
+                       class="text-red-500 text-sm mt-1">
+                    Introduce tu correo electrónico
+                  </div>
+                </div>
+
+                <div class="mb-6">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                  <div class="relative">
+                    <input
+                      [type]="showPaypalPassword ? 'text' : 'password'"
+                      formControlName="paypalPassword"
+                      placeholder="••••••••"
+                      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button
+                      type="button"
+                      (click)="togglePasswordVisibility()"
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 cursor-pointer"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                           class="h-5 w-5" *ngIf="!showPaypalPassword">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                           class="h-5 w-5" *ngIf="showPaypalPassword">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div *ngIf="submitted && paymentMethod === 'paypal' && !paymentForm.get('paypalPassword')?.value"
+                       class="text-red-500 text-sm mt-1">
+                    Introduce tu contraseña
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      formControlName="rememberPaypal"
+                      class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    >
+                    <label for="remember" class="ml-2 block text-sm text-gray-700">
+                      Recordar mis datos
+                    </label>
+                  </div>
+
+                  <div class="text-sm">
+                    <a href="#" class="text-blue-600 hover:text-blue-800">
+                      ¿Olvidaste tu contraseña?
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                (click)="processPaypalPayment()"
+                class="w-full bg-blue-600 py-3 text-white font-medium rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Iniciar sesión
+              </button>
+
+              <div class="mt-4 text-center text-sm text-gray-600">
+                <span>¿No tienes cuenta?</span>
+                <a href="#" class="text-blue-600 hover:text-blue-800 ml-1">
+                  Crear una cuenta
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resumen del Pedido -->
+      <div class="bg-white rounded-lg shadow-md p-6 mt-10">
+        <h2 class="text-xl font-semibold text-gray-700 mb-4">Resumen del Pedido</h2>
+
+          <div>
+            <h2>Resumen del pedido</h2>
+            <p>Producto: {{ productName }}</p>
+            <p>Precio: {{ productPrice | currency }}</p>
+          </div>
+
+          <!-- Total -->
+          <div class="flex justify-between items-center mt-6 pt-4 border-t">
+            <span class="text-lg font-semibold text-gray-700">Total:</span>
+            <span class="text-lg font-bold text-green-600">{{ total | currency:'EUR' }}</span>
+          </div>
+        </div>
+
+      <!-- Botón de pago -->
+      <div class="flex justify-end mt-10">
+        <button
+          type="submit"
+          class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg shadow-md transition-colors"
+        >
+          Finalizar Pago
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

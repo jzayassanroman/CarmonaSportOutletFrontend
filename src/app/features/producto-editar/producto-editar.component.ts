@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { HttpClientModule } from '@angular/common/http';
+import Swal from 'sweetalert2';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-producto-editar',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [FormsModule, ReactiveFormsModule, HttpClientModule,CommonModule],
   templateUrl: './producto-editar.component.html',
   styleUrls: ['./producto-editar.component.css']
 })
@@ -16,6 +18,25 @@ export class ProductoEditarComponent implements OnInit {
   productId!: number;
   idCliente!: number;
 
+  // Enums para el formulario (como arrays)
+  tipoEnum: string[] = [];
+  estadoEnum: string[] = [];
+
+  // Enums definidos dentro del componente
+  private Tipo = {
+    FITNEES: 'FITNEES',
+    FUTBOL: 'FUTBOL',
+    BALONCESTO: 'BALONCESTO',
+    DEPORTE_DE_CONTACTO: 'DEPORTE_DE_CONTACTO'
+  };
+
+  private EstadoProducto = {
+    EXCELENTE: 'EXCELENTE',
+    BUENO: 'BUENO',
+    MALO: 'MALO',
+    MUY_MALO: 'MUY_MALO'
+  };
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -23,6 +44,10 @@ export class ProductoEditarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Inicializar arrays desde enums
+    this.tipoEnum = Object.values(this.Tipo);
+    this.estadoEnum = Object.values(this.EstadoProducto);
+
     this.route.params.subscribe((params) => {
       this.productId = Number(params['id']);
       if (this.productId) {
@@ -30,7 +55,6 @@ export class ProductoEditarComponent implements OnInit {
       }
     });
 
-    // Obtener idCliente desde el token
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
@@ -60,6 +84,7 @@ export class ProductoEditarComponent implements OnInit {
       console.error('No se encontró el token');
       return;
     }
+
     this.productService.getProductById(id, token).subscribe((response: any) => {
       this.productForm.patchValue({
         nombre: response.nombre,
@@ -88,10 +113,24 @@ export class ProductoEditarComponent implements OnInit {
       entrega: 'RECOGIDA'
     };
 
-
     this.productService.editarProducto(this.productId, formData, token).subscribe({
-      next: () => alert('Producto actualizado con éxito.'),
-      error: (err) => console.error('Error al editar producto:', err)
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto actualizado',
+          text: 'Los cambios se han guardado correctamente.',
+          confirmButtonColor: '#10b981'
+        });
+      },
+      error: (err) => {
+        console.error('Error al editar producto:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar',
+          text: 'Hubo un problema al guardar los cambios.',
+          confirmButtonColor: '#ef4444'
+        });
+      }
     });
   }
 }
