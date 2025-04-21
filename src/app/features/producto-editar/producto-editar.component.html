@@ -1,0 +1,75 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10 font-poppins">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b-2 border-green-600 inline-block pb-1">
+    Editar producto
+  </h2>
+
+  <form [formGroup]="productForm" (ngSubmit)="editarProducto()" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Nombre -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Nombre</label>
+      <input formControlName="nombre" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Tipo (desplegable) -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Tipo</label>
+      <select formControlName="tipo" class="form-select w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+        <option value="" disabled>Selecciona un tipo</option>
+        <option *ngFor="let tipo of tipoEnum" [value]="tipo">{{ tipo }}</option>
+      </select>
+    </div>
+
+    <!-- Descripción -->
+    <div class="md:col-span-2">
+      <label class="block text-gray-700 font-semibold mb-1">Descripción</label>
+      <textarea formControlName="descripcion" rows="4" class="form-textarea w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+    </div>
+
+    <!-- Precio -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Precio (€)</label>
+      <input type="number" formControlName="precio" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Imagen 1 -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Imagen 1</label>
+      <input formControlName="imagen1" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Imagen 2 -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Imagen 2</label>
+      <input formControlName="imagen2" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Imagen 3 -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Imagen 3</label>
+      <input formControlName="imagen3" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Imagen 4 -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Imagen 4</label>
+      <input formControlName="imagen4" class="form-input w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500" />
+    </div>
+
+    <!-- Estado (desplegable) -->
+    <div>
+      <label class="block text-gray-700 font-semibold mb-1">Estado</label>
+      <select formControlName="estado" class="form-select w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+        <option value="" disabled>Selecciona un estado</option>
+        <option *ngFor="let estado of estadoEnum" [value]="estado">{{ estado }}</option>
+      </select>
+    </div>
+
+    <!-- Botón -->
+    <div class="md:col-span-2 mt-4">
+      <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 rounded hover:bg-green-700 transition duration-300">
+        Guardar Cambios
+      </button>
+    </div>
+  </form>
+</div>

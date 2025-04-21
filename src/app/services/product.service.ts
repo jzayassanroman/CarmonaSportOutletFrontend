@@ -30,6 +30,14 @@ export class ProductService {
 
     return this.http.get<any[]>(`${this.apiUrl}/${clientId}`, { headers });
   }
+  eliminarProducto(productId: number, token: string): Observable<void> {
+    const headers = this.getAuthHeaders(token);
+    return this.http.delete<void>(`http://localhost:8081/productos/eliminar/${productId}`, { headers });
+  }
+  editarProducto(id: number, producto: any, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`http://localhost:8081/productos/editar/${id}`, producto, { headers });
+  }
 
   crearProducto(producto: any, token: string): Observable<any> {
     console.log("Enviando producto:", producto);

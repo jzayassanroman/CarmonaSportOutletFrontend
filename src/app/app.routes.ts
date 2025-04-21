@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {NavbarComponent} from './features/navbar/navbar.component';
 import {ProductCardComponent} from './features/product-card/product-card.component';
 import {HomeComponent} from './features/home/home.component';
 import {RegistroComponent} from './features/registro/registro.component';
@@ -6,11 +7,11 @@ import {RegistroclienteComponent} from './features/registro-cliente/registroclie
 import {VerificacionComponent} from './features/verificacion/verificacion.component';
 import {LoginComponent} from './features/login/login.component';
 import {LandingComponent} from './features/landing/landing.component';
-import {ProductoInComponent} from './features/producto-in/producto-in.component';
-import {EditarClienteComponent} from './features/editar-cliente/editar-cliente.component';
 import {AdminProductosComponent} from './features/admin-productos/admin-productos.component';
 import {ProductoinComponent} from './features/productoin/productoin.component';
 import {AdminUserComponent} from './features/admin-user/admin-user.component';
+import {ProductoEditarComponent} from './features/producto-editar/producto-editar.component';
+import {PaymentComponent} from './features/payment/payment.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -22,6 +23,8 @@ export const routes: Routes = [
   {path: '', component: LandingComponent},
   {path: 'admin-productos', component: AdminProductosComponent },
   { path: 'productoin', component: ProductoinComponent },
+  { path: 'producto-editar/:id', component: ProductoEditarComponent },
+  { path: 'payment', component: PaymentComponent },
   {path:'admin-user', component: AdminUserComponent},
 
   {path:'editar-cliente', component:EditarClienteComponent },
