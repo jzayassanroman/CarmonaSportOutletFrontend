@@ -15,13 +15,32 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class PerfilClienteComponent implements OnInit {
 
   cliente: Cliente | null = null;
-  provincias: string[] = ['ALMERIA', 'CADIZ', 'CORDOBA', 'GRANADA', 'HUELVA', 'JAEN', 'MALAGA', 'SEVILLA']; // Provincias directamente en frontend
-  selectedProvincia: string = ''; // Provincia seleccionada
+  provincias: string[] = ['ALMERIA', 'CADIZ', 'CORDOBA', 'GRANADA', 'HUELVA', 'JAEN', 'MALAGA', 'SEVILLA'];
+  selectedProvincia: string = '';
+
+  // Tarjeta de crédito
+  cardNumber: string = '';
+  cardName: string = '';
+  cardExpiry: string = '';
+  cardCVV: string = '';
+  guardarTarjeta: boolean = false;
+  isCardFlipped: boolean = false;
 
   constructor(private clienteService: ClienteService) {}
 
   ngOnInit() {
     this.obtenerPerfil();
+
+    // Cargar tarjeta guardada si existe
+    const savedCard = localStorage.getItem('tarjetaGuardada');
+    if (savedCard) {
+      const tarjeta = JSON.parse(savedCard);
+      this.cardNumber = tarjeta.cardNumber;
+      this.cardName = tarjeta.cardName;
+      this.cardExpiry = tarjeta.cardExpiry;
+      this.cardCVV = tarjeta.cardCVV;
+      this.guardarTarjeta = true;
+    }
   }
 
   obtenerPerfil() {
@@ -31,7 +50,7 @@ export class PerfilClienteComponent implements OnInit {
         next: (data) => {
           this.cliente = data;
           console.log('Perfil del cliente recibido:', this.cliente);
-          console.log('ID del cliente:', this.cliente?.id); // Verifica que el ID esté presente
+          console.log('ID del cliente:', this.cliente?.id);
           if (!this.cliente?.id) {
             console.error('El ID del cliente no está definido');
           }
@@ -64,7 +83,19 @@ export class PerfilClienteComponent implements OnInit {
         this.clienteService.editarPerfil(this.cliente.id, token, this.cliente).subscribe({
           next: (data) => {
             console.log('Perfil actualizado', data);
-            // Recargar la página para reflejar los cambios
+            // Guardar tarjeta si está seleccionado
+            if (this.guardarTarjeta) {
+              const tarjetaInfo = {
+                cardNumber: this.cardNumber,
+                cardName: this.cardName,
+                cardExpiry: this.cardExpiry,
+                cardCVV: this.cardCVV
+              };
+              localStorage.setItem('tarjetaGuardada', JSON.stringify(tarjetaInfo));
+            } else {
+              localStorage.removeItem('tarjetaGuardada');
+            }
+
             window.location.reload();
           },
           error: (error: HttpErrorResponse) => {
@@ -77,6 +108,10 @@ export class PerfilClienteComponent implements OnInit {
     }
   }
 
-
+  get cardNumberDisplay(): string {
+    const num = this.cardNumber.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    const formatted = num.replace(/(.{4})/g, '$1 ').trim();
+    return formatted.padEnd(19, '•');
+  }
 
 }
