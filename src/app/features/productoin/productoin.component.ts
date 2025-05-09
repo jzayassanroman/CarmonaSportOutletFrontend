@@ -93,6 +93,7 @@ export class ProductoinComponent implements OnInit {
     this.router.navigate(['/payments'], {
       queryParams: {
         name: this.product.name,
+        id: this.product.id, // <-- añadir esto
         price: this.product.price
       }
     });

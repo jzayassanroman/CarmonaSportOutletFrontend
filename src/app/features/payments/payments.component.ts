@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import {PedidoService} from '../../services/pedido.service';
 
 @Component({
   selector: 'app-payment',
@@ -18,6 +19,7 @@ export class PaymentsComponent implements OnInit {
   productName: string = '';
   productPrice: number = 0;
   total: number = 0;
+  productId: number = 0; // Asegúrate de que este id sea numérico
 
   // Tarjeta
   cardNumber: string = '';
@@ -27,7 +29,8 @@ export class PaymentsComponent implements OnInit {
 
   focusedField: string = '';
 
-  constructor(private clienteService: ClienteService,     private route: ActivatedRoute,) {}
+  constructor(private clienteService: ClienteService,     private route: ActivatedRoute,  private pedidoService: PedidoService // <--- añadido aquí
+  ) {}
 
   ngOnInit(): void {
     this.cargarPerfil();
@@ -36,7 +39,7 @@ export class PaymentsComponent implements OnInit {
       this.productName = params['name'];
       this.productPrice = params['price'];
       this.total = this.productPrice; // Asigna el precio al total
-
+      this.productId = params['id']; // Captura el id del producto automáticamente
     });
   }
 
@@ -66,17 +69,31 @@ export class PaymentsComponent implements OnInit {
   }
 
   simularPago(): void {
-    console.log('Pagando con tarjeta:', {
-      cliente: this.cliente,
-      tarjeta: {
-        number: this.cardNumber,
-        name: this.cardName,
-        expiry: this.cardExpiry,
-        cvv: this.cardCVV
+    if (!this.cliente) {
+      alert('Cliente no disponible');
+      return;
+    }
+
+    const pedido = {
+      cliente: { id: this.cliente.id }, // Incluye el objeto cliente con su id
+      producto: { id: this.productId }, // Asegúrate de usar un id numérico
+      total: this.total,
+      estado: 'PENDIENTE',
+      fecha: new Date().toISOString(), // Convierte la fecha al formato ISO
+      metodoPago: 'TARJETA'
+    };
+
+    this.pedidoService.crearPedido(pedido).subscribe({
+      next: () => {
+        alert('Pago simulado y pedido guardado con éxito');
+      },
+      error: (error) => {
+        console.error('Error al crear el pedido', error);
+        alert('Hubo un error al guardar el pedido');
       }
     });
-    alert('Pago simulado con éxito');
   }
+
 
   get cardNumberDisplay(): string {
     const num = this.cardNumber.replace(/\s+/g, '').replace(/[^0-9]/gi, '');

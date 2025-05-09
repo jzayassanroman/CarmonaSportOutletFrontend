@@ -10,7 +10,6 @@ import {LandingComponent} from './features/landing/landing.component';
 import {AdminProductosComponent} from './features/admin-productos/admin-productos.component';
 import {ProductoinComponent} from './features/productoin/productoin.component';
 import {ProductoEditarComponent} from './features/producto-editar/producto-editar.component';
-import {PaymentComponent} from './features/payment/payment.component';
 import {PerfilClienteComponent} from './features/perfil-cliente/perfil-cliente.component';
 import {PaymentsComponent} from './features/payments/payments.component';
 
