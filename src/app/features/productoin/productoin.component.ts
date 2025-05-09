@@ -90,7 +90,7 @@ export class ProductoinComponent implements OnInit {
   }
   goToPayment(): void {
 
-    this.router.navigate(['/payment'], {
+    this.router.navigate(['/payments'], {
       queryParams: {
         name: this.product.name,
         price: this.product.price
