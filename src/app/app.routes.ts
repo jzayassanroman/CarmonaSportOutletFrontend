@@ -12,6 +12,7 @@ import {ProductoinComponent} from './features/productoin/productoin.component';
 import {AdminUserComponent} from './features/admin-user/admin-user.component';
 import {ProductoEditarComponent} from './features/producto-editar/producto-editar.component';
 import {PaymentComponent} from './features/payment/payment.component';
+import {PerfilClienteComponent} from './features/perfil-cliente/perfil-cliente.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -24,6 +25,7 @@ export const routes: Routes = [
   {path: 'admin-productos', component: AdminProductosComponent },
   { path: 'productoin', component: ProductoinComponent },
   { path: 'producto-editar/:id', component: ProductoEditarComponent },
+  { path: 'perfil', component: PerfilClienteComponent },
   { path: 'payment', component: PaymentComponent },
   {path:'admin-user', component: AdminUserComponent},
 
