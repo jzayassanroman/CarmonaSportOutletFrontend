@@ -54,4 +54,25 @@ export class TarjetahomeComponent implements OnInit {
   goToProduct(product: any) {
     this.router.navigate(['/productoin'], { queryParams: { id: product.id } });
   }
+  toggleFavorite(product: any) {
+    const favorites = this.getFavorites();
+    const index = favorites.findIndex((fav: any) => fav.id === product.id);
+
+    if (index === -1) {
+      favorites.push(product); // Agregar a favoritos
+    } else {
+      favorites.splice(index, 1); // Eliminar de favoritos
+    }
+
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+
+  isFavorite(product: any): boolean {
+    const favorites = this.getFavorites();
+    return favorites.some((fav: any) => fav.id === product.id);
+  }
+
+  getFavorites(): any[] {
+    return JSON.parse(localStorage.getItem('favorites') || '[]');
+  }
 }

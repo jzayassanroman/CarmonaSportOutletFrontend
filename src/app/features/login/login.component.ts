@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
     const loginData = {
       username: this.loginForm.value.username,
-      password: this.loginForm.value.password
+      password: this.loginForm.value.password,
     };
 
     this.authService.login(loginData).subscribe({
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
         this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
         this.loading = false;
         console.error(error);
-      }
+      },
     });
   }
 

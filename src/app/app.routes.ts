@@ -13,6 +13,7 @@ import {AdminUserComponent} from './features/admin-user/admin-user.component';
 import {ProductoEditarComponent} from './features/producto-editar/producto-editar.component';
 import {PaymentComponent} from './features/payment/payment.component';
 import {PerfilClienteComponent} from './features/perfil-cliente/perfil-cliente.component';
+import {FavoritosComponent} from './features/favoritos/favoritos.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilClienteComponent },
   { path: 'payment', component: PaymentComponent },
   {path:'admin-user', component: AdminUserComponent},
+  { path: 'favoritos', component: FavoritosComponent },
 
-  {path:'editar-cliente', component:EditarClienteComponent },
+  // {path:'editar-cliente', component:EditarClienteComponent },
 ];

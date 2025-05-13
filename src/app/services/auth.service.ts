@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,18 +39,31 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/verify`, verificationData, { responseType: 'text' });
   }
 
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-
-  login(credentials: any): Observable<any> {
+  login(credentials: { username: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
-        // Aquí guardamos el token en el localStorage
         if (response && response.token) {
           localStorage.setItem('authToken', response.token); // Guarda el token
+          this.isAuthenticatedSubject.next(true); // Actualiza el estado de autenticación
         }
       })
     );
   }
+
+
+  // login(credentials: any): Observable<any> {
+  //   return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
+  //     tap((response: any) => {
+  //       // Aquí guardamos el token en el localStorage
+  //       if (response && response.token) {
+  //         localStorage.setItem('authToken', response.token); // Guarda el token
+  //       }
+  //     })
+  //   );
+  // }
   obtenerUsuarioLogueado(): any {
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -79,13 +92,20 @@ export class AuthService {
     }
   }
 
-
+  logout(): void {
+    this.isAuthenticatedSubject.next(false);
+    // Lógica adicional para cerrar sesión
+  }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return this.isAuthenticatedSubject.value;
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-  }
+  // isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('token');
+  // }
+  //
+  // logout(): void {
+  //   localStorage.removeItem('token');
+  // }
 }

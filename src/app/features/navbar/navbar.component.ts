@@ -44,6 +44,9 @@ export class NavbarComponent implements OnInit {
     this.isLoggedIn = false;
     this.router.navigate(['/login']);
   }
+  goToFavorites() {
+    this.router.navigate(['/favoritos']);
+  }
 
 
 }
