@@ -11,8 +11,8 @@ import {AdminProductosComponent} from './features/admin-productos/admin-producto
 import {ProductoinComponent} from './features/productoin/productoin.component';
 import {AdminUserComponent} from './features/admin-user/admin-user.component';
 import {ProductoEditarComponent} from './features/producto-editar/producto-editar.component';
-import {PaymentComponent} from './features/payment/payment.component';
 import {PerfilClienteComponent} from './features/perfil-cliente/perfil-cliente.component';
+import {HistorialPedidosComponent} from './features/historial-pedido/historial-pedido.component';
 import {FavoritosComponent} from './features/favoritos/favoritos.component';
 
 export const routes: Routes = [
@@ -30,6 +30,6 @@ export const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   {path:'admin-user', component: AdminUserComponent},
   { path: 'favoritos', component: FavoritosComponent },
+  { path: 'historial', component: HistorialPedidosComponent },
 
-  // {path:'editar-cliente', component:EditarClienteComponent },
 ];
