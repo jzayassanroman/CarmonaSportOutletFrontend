@@ -71,6 +71,20 @@ export class AdminUserComponent implements OnInit{
       });
     }
   }
+  banearUsuario(id: number): void {
+    if (confirm('¿Estás seguro de que quieres banear este usuario?')) {
+      this.usuarioService.banearUsuario(id).subscribe({
+        next: () => {
+          alert('Usuario baneado correctamente');
+          this.cargarUsuarios(); // Recargar la lista de usuarios
+        },
+        error: (err) => {
+          console.error('Error al banear usuario', err);
+          alert('Error al banear el usuario');
+        }
+      });
+    }
+  }
 
 
 }
