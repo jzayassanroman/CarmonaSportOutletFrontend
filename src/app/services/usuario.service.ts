@@ -40,6 +40,10 @@ export class UsuarioService {
     const headers = this.getHeaders();
     return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`, { headers });
   }
+  banearUsuario(id: number): Observable<void> {
+    const headers = this.getHeaders();
+    return this.http.put<void>(`${this.apiUrl}/ban/${id}`, {}, { headers });
+  }
 
 
 
