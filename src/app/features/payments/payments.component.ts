@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
 import {PedidoService} from '../../services/pedido.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-payment',
@@ -70,26 +71,38 @@ export class PaymentsComponent implements OnInit {
 
   simularPago(): void {
     if (!this.cliente) {
-      alert('Cliente no disponible');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Cliente no disponible',
+      });
       return;
     }
 
     const pedido = {
-      cliente: { id: this.cliente.id }, // Incluye el objeto cliente con su id
-      producto: { id: this.productId }, // Asegúrate de usar un id numérico
+      cliente: { id: this.cliente.id },
+      producto: { id: this.productId },
       total: this.total,
       estado: 'PENDIENTE',
-      fecha: new Date().toISOString(), // Convierte la fecha al formato ISO
+      fecha: new Date().toISOString(),
       metodoPago: 'TARJETA'
     };
 
     this.pedidoService.crearPedido(pedido).subscribe({
       next: () => {
-        alert('Pago simulado y pedido guardado con éxito');
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Pago simulado y pedido guardado con éxito',
+        });
       },
       error: (error) => {
         console.error('Error al crear el pedido', error);
-        alert('Hubo un error al guardar el pedido');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un error al guardar el pedido',
+        });
       }
     });
   }
