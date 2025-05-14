@@ -3,22 +3,20 @@ import { ProductoService } from '../../services/producto.service';
 import { ProductoDTO } from '../../dto/ProductoDTO';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-productos',
   standalone: true,
   templateUrl: './admin-productos.component.html',
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   styleUrls: ['./admin-productos.component.css']
 })
 export class AdminProductosComponent implements OnInit {
   productos: ProductoDTO[] = [];
   textoBusqueda: string = '';
   modalCrearVisible: boolean = false;
+  menuVisible: boolean = false;
 
   entregas = [
     { label: 'RECOGIDA', value: 0 },
@@ -46,7 +44,7 @@ export class AdminProductosComponent implements OnInit {
 
   productoEnEdicion: ProductoDTO | null = null;
 
-  constructor(private productoService: ProductoService) {}
+  constructor(private productoService: ProductoService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarProductos();
@@ -56,9 +54,7 @@ export class AdminProductosComponent implements OnInit {
     if (!this.textoBusqueda.trim()) {
       return this.productos;
     }
-
     const termino = this.textoBusqueda.toLowerCase();
-
     return this.productos.filter(p =>
       p.nombre.toLowerCase().includes(termino) ||
       p.descripcion.toLowerCase().includes(termino) ||
@@ -67,10 +63,18 @@ export class AdminProductosComponent implements OnInit {
     );
   }
 
+  toggleMenu(): void {
+    this.menuVisible = !this.menuVisible;
+  }
+
+  navigateTo(ruta: string): void {
+    this.menuVisible = false;
+    this.router.navigate(['/' + ruta]);
+  }
 
   cargarProductos(): void {
     this.productoService.getProductos().subscribe(data => {
-      this.productos = data; // Asignar directamente los datos del backend
+      this.productos = data;
     });
   }
 
@@ -91,11 +95,11 @@ export class AdminProductosComponent implements OnInit {
   }
 
   iniciarEdicion(producto: ProductoDTO): void {
-    this.productoEnEdicion = { ...producto }; // Copia para edición
+    this.productoEnEdicion = { ...producto };
   }
 
   guardarEdicion(): void {
-    if (this.productoEnEdicion && this.productoEnEdicion.id) {
+    if (this.productoEnEdicion?.id) {
       this.productoService.editarProducto(this.productoEnEdicion.id, this.productoEnEdicion).subscribe(() => {
         this.cargarProductos();
         this.productoEnEdicion = null;
