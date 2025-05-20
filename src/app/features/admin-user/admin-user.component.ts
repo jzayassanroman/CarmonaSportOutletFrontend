@@ -3,6 +3,7 @@ import {Usuario, UsuarioService} from '../../services/usuario.service';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-admin-user',
@@ -17,6 +18,7 @@ export class AdminUserComponent implements OnInit{
   usuarios: Usuario[] = [];
   textoBusqueda: string = '';
   usuariosFiltrados: any[] = [];
+  menuVisible: boolean = false;
 
   obtenerNombreEstado(estado: number): string {
     const estados = ['Inactivo', 'Pendiente', 'En Proceso', 'Activo'];
@@ -24,10 +26,17 @@ export class AdminUserComponent implements OnInit{
   }
 
   constructor(private usuarioService: UsuarioService,
-              private authService: AuthService) {}
+              private authService: AuthService,private router: Router) {}
 
   ngOnInit(): void {
     this.cargarUsuarios();
+  }
+  toggleMenu(): void {
+    this.menuVisible = !this.menuVisible;
+  }
+  navigateTo(ruta: string): void {
+    this.menuVisible = false;
+    this.router.navigate(['/' + ruta]);
   }
 
   // Método para cargar los usuarios

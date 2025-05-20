@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
-import {NavbarComponent} from './features/navbar/navbar.component';
-import {FooterComponent} from './features/footer/footer.component';
-import {CommonModule} from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './features/navbar/navbar.component';
+import { FooterComponent } from './features/footer/footer.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +11,13 @@ import {CommonModule} from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-
 export class AppComponent {
   isAdminRoute: boolean = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
       // Verifica si la ruta actual contiene "admin"
-      this.isAdminRoute = this.router.url.includes('/admin-productos');
+      this.isAdminRoute = this.router.url.includes('/admin-productos') || this.router.url.includes('admin-user')|| this.router.url.includes('pantalla-administrador');
     });
   }
 }

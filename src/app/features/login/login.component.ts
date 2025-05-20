@@ -47,7 +47,16 @@ export class LoginComponent implements OnInit {
     this.authService.login(loginData).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/home']); // Redirigir tras iniciar sesión
+
+        const rol = this.authService.getUserRole();
+
+        if (rol === 'ADMINISTRADOR') {
+          this.router.navigate(['/pantalla-administrador']);
+        } else if (rol === 'USUARIO') {
+          this.router.navigate(['/home']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (error) => {
         this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
@@ -56,6 +65,7 @@ export class LoginComponent implements OnInit {
       },
     });
   }
+
 
   redirectToRegister(): void {
     this.router.navigate(['/registeruser']);
