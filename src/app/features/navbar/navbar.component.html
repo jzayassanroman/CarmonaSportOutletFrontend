@@ -75,7 +75,7 @@
           <ul>
             <li *ngFor="let chat of chats">
               <a [routerLink]="['/chat', chat.id]" class="block px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md">
-                Chat con {{ chat.usuario1?.nombre === localStorage.getItem('userName') ? chat.usuario2?.nombre : chat.usuario1?.nombre }}
+                Chat de {{ chat.nombreProducto || 'Producto desconocido' }}
               </a>
             </li>
           </ul>

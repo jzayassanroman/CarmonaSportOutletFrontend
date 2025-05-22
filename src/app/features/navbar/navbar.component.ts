@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
+import {AuthService} from '../../services/auth.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -17,11 +19,30 @@ export class NavbarComponent implements OnInit {
   showUserDropdown: boolean = false;
   showChatsDropdown: boolean = false; // <- Nuevo
   chats: any[] = [];
+  private authSubscription!: Subscription;
 
-  constructor(private router: Router, private chatService: ChatService) {}
+  constructor(private router: Router, private chatService: ChatService,private authService: AuthService) {}
 
   ngOnInit(): void {
     this.checkLoginStatus();
+
+    this.authSubscription = this.authService.authStatus$.subscribe(status => {
+      this.isLoggedIn = status;
+      if (status) {
+        const token = localStorage.getItem('authToken');
+        const usuarioId = this.getUserIdFromToken(token!);
+        this.chatService.obtenerChatsDelUsuario(usuarioId, token!).subscribe((data) => {
+          this.chats = data;
+        });
+      } else {
+        this.chats = [];
+      }
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
   }
 
   checkLoginStatus(): void {

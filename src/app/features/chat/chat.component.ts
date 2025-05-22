@@ -33,9 +33,19 @@ export class ChatComponent implements OnInit {
       return;
     }
 
+    // Manejar tanto queryParams como parámetros de ruta
     this.route.queryParams.subscribe(params => {
-      this.chatId = Number(params['chatId']);
-      if (this.chatId) {
+      const queryChatId = Number(params['chatId']);
+      if (queryChatId) {
+        this.chatId = queryChatId;
+        this.loadMessages(token);
+      }
+    });
+
+    this.route.params.subscribe(params => {
+      const routeChatId = Number(params['id']);
+      if (routeChatId) {
+        this.chatId = routeChatId;
         this.loadMessages(token);
       }
     });

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,8 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8081/auth';
   private tokenKey = 'authToken';
+  private authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  authStatus$ = this.authStatusSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -42,11 +44,14 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
         if (response && response.token) {
-          localStorage.setItem(this.tokenKey, response.token); // guarda el token
+          localStorage.setItem(this.tokenKey, response.token);
+          this.authStatusSubject.next(true); // 🔥 Notifica que se ha logueado
         }
       })
     );
   }
+
+
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
@@ -54,6 +59,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    this.authStatusSubject.next(false); // 🔥 Notifica que se ha deslogueado
   }
 
   isLoggedIn(): boolean {

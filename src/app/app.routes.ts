@@ -15,7 +15,7 @@ import { PaymentComponent } from './features/payment/payment.component';
 import { EditarClienteComponent } from './features/editar-cliente/editar-cliente.component';
 import { PantallaAdministradorComponent } from './features/pantalla-administrador/pantalla-administrador.component';
 import { AdminGuard } from './services/admin.guard';
-import {ChatComponent} from './features/chat/chat.component'; // 👈 Añadido
+import { ChatComponent } from './features/chat/chat.component';
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -25,13 +25,13 @@ export const routes: Routes = [
   { path: 'productocard', component: ProductCardComponent },
   { path: 'home', component: HomeComponent },
   { path: '', component: LandingComponent },
-  { path: 'admin-productos', component: AdminProductosComponent, canActivate: [AdminGuard] }, // 👈 Protegido
+  { path: 'admin-productos', component: AdminProductosComponent, canActivate: [AdminGuard] },
   { path: 'productoin', component: ProductoinComponent },
   { path: 'producto-editar/:id', component: ProductoEditarComponent },
   { path: 'payment', component: PaymentComponent },
-  { path: 'admin-user', component: AdminUserComponent, canActivate: [AdminGuard] }, // 👈 Protegido
-  { path: 'pantalla-administrador', component: PantallaAdministradorComponent, canActivate: [AdminGuard] }, // 👈 Protegido
+  { path: 'admin-user', component: AdminUserComponent, canActivate: [AdminGuard] },
+  { path: 'pantalla-administrador', component: PantallaAdministradorComponent, canActivate: [AdminGuard] },
   { path: 'editar-cliente', component: EditarClienteComponent },
-  { path: 'chat', component: ChatComponent },
-
+  { path: 'chat', component: ChatComponent }, // Ruta general para chat
+  { path: 'chat/:id', component: ChatComponent }, // Ruta específica para un chat con ID
 ];
