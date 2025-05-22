@@ -41,9 +41,18 @@ export class UsuarioService {
     return this.http.delete<void>(`${this.apiUrl}/eliminar/${id}`, { headers });
   }
   banearUsuario(id: number): Observable<void> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(); // Asegúrate de que este método incluya el token de autenticación
     return this.http.put<void>(`${this.apiUrl}/ban/${id}`, {}, { headers });
   }
+
+  desbanearUsuario(id: number): Observable<string> {
+    const headers = this.getHeaders();
+    return this.http.put(`${this.apiUrl}/desbanear/${id}`, {}, {
+      headers,
+      responseType: 'text'
+    });
+  }
+
 
 
 

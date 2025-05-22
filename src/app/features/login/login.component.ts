@@ -45,16 +45,34 @@ export class LoginComponent implements OnInit {
     };
 
     this.authService.login(loginData).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log("Respuesta del servidor:", response);
+
+        if (response && response.token) {
+          console.log("Login exitoso");
+          localStorage.setItem('authToken', response.token);
+          this.router.navigate(['/home']);
+        } else {
+          console.error("Respuesta inesperada del servidor");
+          alert("Error en la autenticación. Intenta nuevamente.");
+        }
+
         this.loading = false;
-        this.router.navigate(['/home']); // Redirigir tras iniciar sesión
       },
       error: (error) => {
-        this.errorMessage = 'Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.';
+        console.error("Error de autenticación", error);
+        if (error.status === 403) {
+          alert("Tu cuenta está baneada.");
+        } else if (error.status === 401) {
+          alert("Usuario o contraseña incorrectos.");
+        } else {
+          alert("Ocurrió un error. Intenta más tarde.");
+        }
+
         this.loading = false;
-        console.error(error);
       }
     });
   }
+
 
 }

@@ -85,6 +85,21 @@ export class AdminUserComponent implements OnInit{
       });
     }
   }
+  desbanearUsuario(id: number): void {
+    if (confirm('¿Estás seguro de que quieres desbanear este usuario?')) {
+      this.usuarioService.desbanearUsuario(id).subscribe({
+        next: (mensaje) => {
+          alert(mensaje); // Mostrará: "Usuario desbaneado exitosamente"
+          this.cargarUsuarios(); // Recargar la lista
+        },
+        error: (err) => {
+          console.error('Error al desbanear usuario', err);
+          alert('Error al desbanear el usuario');
+        }
+      });
+    }
+  }
+
 
 
 }
