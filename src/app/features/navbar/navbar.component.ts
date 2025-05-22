@@ -1,41 +1,73 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {CommonModule} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    RouterLink,CommonModule
+    RouterLink, CommonModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  isLoggedIn: boolean = false;  // Asumimos que el usuario no está logueado
-  showDropdown: boolean = false;
+  isLoggedIn: boolean = false;
+  showUserDropdown: boolean = false;
+  showChatsDropdown: boolean = false; // <- Nuevo
+  chats: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private chatService: ChatService) {}
 
   ngOnInit(): void {
-    this.checkLoginStatus();  // Verificar el estado de login cuando se inicializa el componente
+    this.checkLoginStatus();
   }
 
-  // Método para verificar si el usuario está logueado
   checkLoginStatus(): void {
     const token = localStorage.getItem('authToken');
     this.isLoggedIn = token !== null;
+
+    if (this.isLoggedIn && token) {
+      try {
+        const usuarioId = this.getUserIdFromToken(token);
+        this.chatService.obtenerChatsDelUsuario(usuarioId, token).subscribe((data) => {
+          this.chats = data;
+          console.log('Chats:', this.chats);
+        });
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        this.isLoggedIn = false;
+      }
+    }
   }
 
+  private getUserIdFromToken(token: string): number {
+    const payloadBase64 = token.split('.')[1];
+    const payload = JSON.parse(atob(payloadBase64));
+    return payload.userId;
+  }
 
-  toggleDropdown(): void {
-    this.showDropdown = !this.showDropdown;
+  toggleUserDropdown(): void {
+    this.showUserDropdown = !this.showUserDropdown;
+    this.showChatsDropdown = false;
+  }
+
+  toggleChatsDropdown(): void {
+    this.showChatsDropdown = !this.showChatsDropdown;
+    this.showUserDropdown = false;
   }
 
   closeDropdown(event: Event): void {
     const target = event.target as HTMLElement;
-    if (!target.closest('#userMenuButton') && !target.closest('#userDropdown')) {
-      this.showDropdown = false;
+    if (
+      !target.closest('#userMenuButton') &&
+      !target.closest('#userDropdown') &&
+      !target.closest('#chatsMenuButton') &&
+      !target.closest('#chatsDropdown')
+    ) {
+      this.showUserDropdown = false;
+      this.showChatsDropdown = false;
     }
   }
 
@@ -45,5 +77,6 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-
+  protected readonly localStorage = localStorage;
 }
+

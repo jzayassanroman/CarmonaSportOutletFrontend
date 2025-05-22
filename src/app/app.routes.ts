@@ -14,7 +14,8 @@ import { ProductoEditarComponent } from './features/producto-editar/producto-edi
 import { PaymentComponent } from './features/payment/payment.component';
 import { EditarClienteComponent } from './features/editar-cliente/editar-cliente.component';
 import { PantallaAdministradorComponent } from './features/pantalla-administrador/pantalla-administrador.component';
-import { AdminGuard } from './services/admin.guard'; // 👈 Añadido
+import { AdminGuard } from './services/admin.guard';
+import {ChatComponent} from './features/chat/chat.component'; // 👈 Añadido
 
 export const routes: Routes = [
   { path: 'registeruser', component: RegistroComponent },
@@ -31,4 +32,6 @@ export const routes: Routes = [
   { path: 'admin-user', component: AdminUserComponent, canActivate: [AdminGuard] }, // 👈 Protegido
   { path: 'pantalla-administrador', component: PantallaAdministradorComponent, canActivate: [AdminGuard] }, // 👈 Protegido
   { path: 'editar-cliente', component: EditarClienteComponent },
+  { path: 'chat', component: ChatComponent },
+
 ];

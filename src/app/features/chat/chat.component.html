@@ -1,0 +1,18 @@
+<div class="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-xl mt-10 h-[80vh] flex flex-col">
+  <div class="overflow-y-auto flex-1 space-y-4 pr-2" id="chat-box">
+    <div *ngFor="let message of messages" class="flex" [ngClass]="{ 'justify-end': message.emisorId === currentUserId, 'justify-start': message.emisorId !== currentUserId }">
+      <div [ngClass]="{
+              'bg-green-500 text-white': message.emisorId === currentUserId,
+              'bg-gray-200 text-gray-800': message.emisorId !== currentUserId
+            }"
+           class="px-4 py-2 rounded-xl max-w-xs break-words">
+        {{ message.contenido }}
+      </div>
+    </div>
+  </div>
+
+  <form (submit)="sendMessage()" class="flex items-center mt-4 gap-3">
+    <input [(ngModel)]="newMessage" name="message" placeholder="Escribe un mensaje..." class="flex-1 border rounded-xl px-4 py-2 focus:outline-none" />
+    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl">Enviar</button>
+  </form>
+</div>
