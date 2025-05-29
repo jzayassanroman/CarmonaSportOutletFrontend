@@ -21,6 +21,9 @@ export class ProductoService {
   getProductos(): Observable<ProductoDTO[]> {
     return this.http.get<ProductoDTO[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() });
   }
+  obtenerProductoPorId(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
 
   // Crear un producto
   crearProducto(producto: ProductoDTO): Observable<ProductoDTO> {

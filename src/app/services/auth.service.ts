@@ -99,10 +99,29 @@ export class AuthService {
         return null;
       }
     }
+    return null;
   }
+
+
+  getUserIdFromToken2(): number | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        console.log('Usuario logueado:', payload);
+        return payload.clienteId ?? null; // ✅ Devuelve solo el número
+      } catch (e) {
+        console.error('Token inválido');
+        return null;
+      }
+    }
+    return null;
+  }
+
 
   logout(): void {
     this.isAuthenticatedSubject.next(false);
+  }
     // Lógica adicional para cerrar sesión
   getUserRole(): string | null {
     const payload = this.obtenerUsuarioLogueado();
@@ -113,14 +132,7 @@ export class AuthService {
     return this.getUserRole() === 'ADMINISTRADOR';
   }
 
-  getUserIdFromToken(): number | null {
-    const payload = this.obtenerUsuarioLogueado();
-    return payload?.id || payload?.userId || null;
-  }
 
-  isLoggedIn(): boolean {
-    return this.isAuthenticatedSubject.value;
-  }
 
   // isLoggedIn(): boolean {
   //   return !!localStorage.getItem('token');

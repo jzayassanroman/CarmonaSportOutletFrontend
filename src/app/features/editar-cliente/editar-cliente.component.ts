@@ -36,10 +36,7 @@ export class EditarClienteComponent implements OnInit {
   ngOnInit(): void {
     this.inicializarFormulario();
     this.cargarDatosCliente();
-
   }
-
-
 
   inicializarFormulario(): void {
     this.clienteForm = this.fb.group({
@@ -48,7 +45,8 @@ export class EditarClienteComponent implements OnInit {
       correoElectronico: ['', [Validators.required, Validators.email]],
       direccion: [''],
       telefono: ['', [Validators.required, Validators.pattern('[0-9]{9,15}')]],
-      nombreUsuario: ['', [Validators.required, Validators.minLength(4)]]
+      nombreUsuario: ['', [Validators.required, Validators.minLength(4)]],
+      provincia: ['', [Validators.required]]
     });
   }
 
@@ -76,7 +74,8 @@ export class EditarClienteComponent implements OnInit {
             correoElectronico: cliente.email,
             direccion: cliente.direccion || '',
             telefono: cliente.telefono,
-            nombreUsuario: cliente.usuario?.username || ''
+            nombreUsuario: cliente.usuario?.username || '',
+            provincia: cliente.provincia || ''
           });
           this.formChanged = false;
         });
@@ -96,11 +95,13 @@ export class EditarClienteComponent implements OnInit {
         nombre: formValue.nombre,
         apellido: formValue.apellido,
         email: formValue.correoElectronico,
-        direccion: formValue.direccion,
+        direccion: formValue.direccion || '', // Ensure it's always a string
         telefono: formValue.telefono,
+        provincia: formValue.provincia,
         usuario: {
+          id: this.clienteId,
           username: formValue.nombreUsuario
-        } as any
+        }
       };
 
       console.log('Enviando cliente actualizado:', clienteActualizado);
@@ -121,6 +122,4 @@ export class EditarClienteComponent implements OnInit {
         });
     }
   }
-
-
 }

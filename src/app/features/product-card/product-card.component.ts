@@ -98,4 +98,6 @@ export class ProductCardComponent implements OnInit {
   prevImage(product: any) {
     product.currentImageIndex = (product.currentImageIndex - 1 + product.images.length) % product.images.length;
   }
+
+
 }

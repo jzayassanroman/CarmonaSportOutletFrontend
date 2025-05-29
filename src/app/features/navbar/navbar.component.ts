@@ -26,6 +26,15 @@ export class NavbarComponent implements OnInit {
     const token = localStorage.getItem('authToken');
     this.isLoggedIn = token !== null;
   }
+  navigatetoproductos(): void {
+    this.router.navigate(['/productocard']);
+  }
+  navigatetoperfil(): void {
+    this.router.navigate(['/perfil']);
+  }
+  navigatetoHistorial(): void {
+    this.router.navigate(['/historial']);
+  }
 
 
   toggleDropdown(): void {

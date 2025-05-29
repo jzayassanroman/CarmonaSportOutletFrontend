@@ -56,22 +56,6 @@
         />
       </svg>
     </button>
-    <button class="text-gray-600 hover:text-green-600 transition-colors">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        class="w-8 h-8"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-        />
-      </svg>
-    </button>
 
     <!-- Botón de usuario con dropdown -->
     <div class="relative" (document:click)="closeDropdown($event)">
@@ -105,13 +89,31 @@
         <div class="py-2 px-1">
           <!-- Mis Productos y Cerrar Sesión solo cuando está logueado -->
           <div *ngIf="isLoggedIn" class="space-y-1">
-            <a routerLink="/mis-productos"
+            <a (click)="navigatetoproductos()"
                class="flex items-center px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
                role="menuitem">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               <span>Mis Productos</span>
+            </a>
+            <a (click)="navigatetoperfil()"
+               class="flex items-center px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
+               role="menuitem">
+              <svg xmlns="http://www.w3.org/2000/svg"  class="h-5 w-5 mr-3 text-gray-400" fill="currentColor"  viewBox="0 0 16 16">
+                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+              </svg>
+              <span>Mi perfil</span>
+            </a>
+            <a (click)="navigatetoHistorial()"
+               class="flex items-center px-4 py-3 text-gray-700 hover:bg-green-50 rounded-md hover:text-green-600 transition-all duration-150"
+               role="menuitem">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="h-5 w-5 mr-3 text-gray-400" viewBox="0 0 16 16">
+                <path d="M6.5 7a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1z"/>
+                <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+              </svg>
+              <span>Historial pedidos</span>
             </a>
 
             <div class="border-t border-gray-100 my-1"></div>

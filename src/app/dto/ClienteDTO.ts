@@ -5,5 +5,9 @@ export interface Cliente {
   email: string;
   telefono: string;  // Cambiado a string porque en Angular manejamos el teléfono como string
   direccion: string;
-  provincia: string | number; // aquí está el truco
+  provincia: string | number;// aquí está el truco
+  usuario: {
+    id: number;
+    username: string;
+  };
 }

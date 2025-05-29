@@ -5,11 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {ValoracionesComponent} from '../valoraciones/valoraciones.component';
 
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, FormsModule, RouterLink, ValoracionesComponent],
   templateUrl: './productoin.component.html',
   styleUrls: ['./productoin.component.css']
 })
@@ -17,10 +19,16 @@ export class ProductoinComponent implements OnInit {
   product: any;
   currentImageIndex: number = 0;
   quantity: number = 1; // Added quantity property
+  clienteLogueadoId!: number;
 
-  constructor(private route: ActivatedRoute, private productService: ProductService, private router:Router ) {}
+
+  constructor(private authService:AuthService,private route: ActivatedRoute, private productService: ProductService, private router:Router ) {}
 
   ngOnInit(): void {
+    const id = this.authService.getUserIdFromToken();
+    if (id) {
+      this.clienteLogueadoId = id;
+    }
     this.route.queryParams.subscribe((params) => {
       const productId = Number(params['id']);
       if (productId) {
@@ -44,6 +52,7 @@ export class ProductoinComponent implements OnInit {
           category: response.tipo,
           description: response.descripcion,
           price: response.precio,
+          clientId: response.idCliente,
           clientName: response.clientName ?? 'Sin cliente', // Cambiado a response.clientName
           images: [response.imagen1, response.imagen2, response.imagen3, response.imagen4].filter((img) => img),
           isFavorite: response.esFavorito
@@ -90,7 +99,7 @@ export class ProductoinComponent implements OnInit {
   }
   goToPayment(): void {
 
-    this.router.navigate(['/payments'], {
+    this.router.navigate(['/payment'], {
       queryParams: {
         name: this.product.name,
         id: this.product.id, // <-- añadir esto
